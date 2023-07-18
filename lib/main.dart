@@ -17,8 +17,10 @@ Future<void> main() async {
   await configureDependencies();
 
   runApp(
-    Provider(
-      create: (context) => const AccountModule(),
+    MultiProvider(
+      providers: const [
+        AccountModule(),
+      ],
       child: const AvaApp(),
     ),
   );

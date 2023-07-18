@@ -9,5 +9,10 @@ final sl = GetIt.instance;
 @InjectableInit(preferRelativeImports: false)
 Future<void> configureDependencies() async => sl.init();
 
-@lazySingleton
-ViaCepSearchCep get viaCep => ViaCepSearchCep();
+@module
+abstract class AppModule {
+  const AppModule();
+
+  @lazySingleton
+  ViaCepSearchCep get viaCep => ViaCepSearchCep();
+}
