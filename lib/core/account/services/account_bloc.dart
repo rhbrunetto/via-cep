@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:dfunc/dfunc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 
 import '../data/account_repository.dart';
 import '../models/account_data.dart';
@@ -19,6 +21,7 @@ sealed class AccountState with _$AccountState {
   const factory AccountState.loaded(AccountData accountData) = _Loaded;
 }
 
+@injectable
 class AccountBloc extends Bloc<AccountEvent, AccountState> {
   AccountBloc({
     required AccountRepository repository,
@@ -30,5 +33,18 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   final AccountRepository _repository;
 
   EventHandler<AccountEvent, AccountState> get _eventHandler =>
-      (event, emit) => event.map();
+      (event, emit) => event.map(
+            load: (_) => _loadAccount(emit),
+            register: (event) => ignore,
+          );
+
+  Future<void> _loadAccount(Emitter emit) async {
+    final account = await _repository.load();
+
+    final newState = account
+        .maybeFlatMap(AccountState.loaded)
+        .ifNull(() => const AccountState.none());
+
+    emit(newState);
+  }
 }

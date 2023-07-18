@@ -34,7 +34,7 @@ class _AvaAppState extends State<AvaApp> {
     );
 
     return MaterialApp.router(
-      routerConfig: _router.config(),
+      routeInformationParser: _router.defaultRouteParser(),
       routerDelegate: AutoRouterDelegate.declarative(
         _router,
         routes: (_) => [
