@@ -2,6 +2,7 @@ import 'package:dfunc/dfunc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:search_cep/search_cep.dart';
 
 import '../models/address.dart';
@@ -26,7 +27,7 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     required ViaCepSearchCep cepClient,
   })  : _cepClient = cepClient,
         super(const AddressState.none()) {
-    on<AddressEvent>(_eventHandler);
+    on<AddressEvent>(_eventHandler, transformer: _debounce(_duration));
   }
 
   final ViaCepSearchCep _cepClient;
@@ -71,3 +72,8 @@ extension on AddressData {
         gia: viaCepInfo.gia ?? gia,
       );
 }
+
+const _duration = Duration(milliseconds: 300);
+
+EventTransformer<Event> _debounce<Event>(Duration duration) =>
+    (events, mapper) => events.debounceTime(duration).switchMap(mapper);

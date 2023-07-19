@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../../../l10n/l10n.dart';
+import '../../../../ui/autocomplete.dart';
 import '../../../../ui/textfield.dart';
+import '../../../../ui/validators.dart';
 import '../../models/address.dart';
+import '../../models/uf.dart';
 
 class AddressForm extends StatefulWidget {
   const AddressForm({
@@ -21,15 +24,14 @@ class AddressForm extends StatefulWidget {
 }
 
 class _AddressFormState extends State<AddressForm> {
-  final _cepInput = _Input();
-  final _logradouroInput = _Input();
-  final _complementoInput = _Input();
-  final _bairroInput = _Input();
-  final _localidadeInput = _Input();
-  final _ufInput = _Input();
-  final _unidadeInput = _Input();
-  final _ibgeInput = _Input();
-  final _giaInput = _Input();
+  final _formKey = GlobalKey<FormState>();
+  final _cepController = TextEditingController();
+  final _logradouroController = TextEditingController();
+  final _complementoController = TextEditingController();
+  final _bairroController = TextEditingController();
+  final _localidadeController = TextEditingController();
+  final _ufController = TextEditingController();
+  final _unidadeController = TextEditingController();
 
   @override
   void initState() {
@@ -46,102 +48,115 @@ class _AddressFormState extends State<AddressForm> {
   }
 
   void _update(AddressData data) {
-    _cepInput.update(data.cep);
-    _logradouroInput.update(data.logradouro);
-    _complementoInput.update(data.complemento);
-    _bairroInput.update(data.bairro);
-    _localidadeInput.update(data.localidade);
-    _ufInput.update(data.uf);
-    _unidadeInput.update(data.unidade);
-    _ibgeInput.update(data.ibge);
-    _giaInput.update(data.gia);
-
-    _cepInput.focusNode.requestFocus();
+    _cepController.update(data.cep);
+    _logradouroController.update(data.logradouro);
+    _complementoController.update(data.complemento);
+    _bairroController.update(data.bairro);
+    _localidadeController.update(data.localidade);
+    _ufController.update(data.uf);
+    _unidadeController.update(data.unidade);
   }
 
-  void _onSubmit() => widget.onSubmit(
-        AddressData(
-          cep: _cepInput.controller.text,
-          logradouro: _logradouroInput.controller.text,
-          complemento: _complementoInput.controller.text,
-          bairro: _bairroInput.controller.text,
-          localidade: _localidadeInput.controller.text,
-          uf: _ufInput.controller.text,
-          unidade: _unidadeInput.controller.text,
-          ibge: _ibgeInput.controller.text,
-          gia: _giaInput.controller.text,
-        ),
-      );
+  void _onSubmit() {
+    final valid = _formKey.currentState?.validate() ?? false;
+    if (!valid) return;
+
+    widget.onSubmit(
+      AddressData(
+        cep: _cepController.text,
+        logradouro: _logradouroController.text,
+        complemento: _complementoController.text,
+        bairro: _bairroController.text,
+        localidade: _localidadeController.text,
+        uf: _ufController.text,
+        unidade: _unidadeController.text,
+      ),
+    );
+  }
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            AvaTextField(
-              controller: _cepInput.controller,
-              focusNode: _cepInput.focusNode,
-              label: context.l10n.cep,
-              // onChanged: widget.onCep,
-            ),
-            AvaTextField(
-              controller: _logradouroInput.controller,
-              focusNode: _logradouroInput.focusNode,
-              label: context.l10n.logradouro,
-            ),
-            AvaTextField(
-              controller: _complementoInput.controller,
-              focusNode: _complementoInput.focusNode,
-              label: context.l10n.complemento,
-            ),
-            AvaTextField(
-              controller: _bairroInput.controller,
-              focusNode: _bairroInput.focusNode,
-              label: context.l10n.bairro,
-            ),
-            AvaTextField(
-              controller: _localidadeInput.controller,
-              focusNode: _localidadeInput.focusNode,
-              label: context.l10n.localidade,
-            ),
-            AvaTextField(
-              controller: _ufInput.controller,
-              focusNode: _ufInput.focusNode,
-              label: context.l10n.uf,
-            ),
-            AvaTextField(
-              controller: _unidadeInput.controller,
-              focusNode: _unidadeInput.focusNode,
-              label: context.l10n.unidade,
-            ),
-            AvaTextField(
-              controller: _ibgeInput.controller,
-              focusNode: _ibgeInput.focusNode,
-              label: context.l10n.ibge,
-            ),
-            AvaTextField(
-              controller: _giaInput.controller,
-              focusNode: _giaInput.focusNode,
-              label: context.l10n.gia,
-            ),
-            const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: _onSubmit,
-              child: const Text('Salvar'),
-            ),
-          ],
+  Widget build(BuildContext context) => Form(
+        key: _formKey,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              AvaTextField(
+                controller: _cepController,
+                label: context.l10n.cep,
+                validators: [
+                  context.requiredValidator(),
+                ],
+                // onChanged: widget.onCep,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Flexible(
+                    flex: 3,
+                    child: AvaTextField(
+                      controller: _logradouroController,
+                      label: context.l10n.logradouro,
+                      validators: [
+                        context.requiredValidator(),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Flexible(
+                    flex: 1,
+                    child: AvaTextField(
+                      controller: _complementoController,
+                      label: context.l10n.complemento,
+                    ),
+                  ),
+                ],
+              ),
+              AvaTextField(
+                controller: _bairroController,
+                label: context.l10n.bairro,
+              ),
+              Row(
+                children: [
+                  Flexible(
+                    flex: 3,
+                    child: AvaTextField(
+                      controller: _localidadeController,
+                      label: context.l10n.localidade,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Flexible(
+                    flex: 1,
+                    child: AvaAutocomplete(
+                      controller: _ufController,
+                      label: context.l10n.uf,
+                      enforceOption: Uf.values.map((it) => it.sigla),
+                      suggestionBuilder: (it) => Uf.values
+                          .where((e) =>
+                              e.sigla.toLowerCase().contains(it) ||
+                              e.nome.toLowerCase().contains(it))
+                          .map((it) => it.sigla),
+                    ),
+                  ),
+                ],
+              ),
+              AvaTextField(
+                controller: _unidadeController,
+                label: context.l10n.unidade,
+              ),
+              const SizedBox(height: 32),
+              ElevatedButton(
+                onPressed: _onSubmit,
+                child: Text(context.l10n.save),
+              ),
+            ],
+          ),
         ),
       );
 }
 
-class _Input {
-  const _Input._(this.controller, this.focusNode);
-
-  factory _Input() => _Input._(TextEditingController(), FocusNode());
-
-  final TextEditingController controller;
-  final FocusNode focusNode;
-
-  void update(String? text) => text != null ? controller.text = text : null;
+extension on TextEditingController {
+  void update(String? text) => text != null ? this.text = text : null;
 }

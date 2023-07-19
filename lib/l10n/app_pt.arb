@@ -3,6 +3,16 @@
   "myAddresses": "Meus Endereços",
   "newAddress": "Novo Endereço",
   "save": "Salvar",
+  "validatorRequired": "Campo obrigatório",
+  "validatorInvalid": "Inválido",
+  "validatorMinChar": "Mínimo {length} caracteres",
+  "@validatorMinChar": {
+    "placeholders": {
+      "length": {
+        "type": "int"
+      }
+    }
+  },
   "cep": "CEP",
   "logradouro": "Logradouro",
   "complemento": "Complemento",
