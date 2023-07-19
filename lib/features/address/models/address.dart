@@ -1,7 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../data/uf.dart';
-
 part 'address.freezed.dart';
 
 @freezed
@@ -21,7 +19,7 @@ class AddressData with _$AddressData {
     String? complemento,
     String? bairro,
     String? localidade,
-    Uf? uf,
+    String? uf,
     String? unidade,
     String? ibge,
     String? gia,

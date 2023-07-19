@@ -205,52 +205,52 @@ class $AddressRowsTable extends AddressRows
   static const VerificationMeta _cepMeta = const VerificationMeta('cep');
   @override
   late final GeneratedColumn<String> cep = GeneratedColumn<String>(
-      'cep', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      'cep', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _logradouroMeta =
       const VerificationMeta('logradouro');
   @override
   late final GeneratedColumn<String> logradouro = GeneratedColumn<String>(
-      'logradouro', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      'logradouro', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _complementoMeta =
       const VerificationMeta('complemento');
   @override
   late final GeneratedColumn<String> complemento = GeneratedColumn<String>(
-      'complemento', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      'complemento', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _bairroMeta = const VerificationMeta('bairro');
   @override
   late final GeneratedColumn<String> bairro = GeneratedColumn<String>(
-      'bairro', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      'bairro', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _localidadeMeta =
       const VerificationMeta('localidade');
   @override
   late final GeneratedColumn<String> localidade = GeneratedColumn<String>(
-      'localidade', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      'localidade', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _ufMeta = const VerificationMeta('uf');
   @override
   late final GeneratedColumn<String> uf = GeneratedColumn<String>(
-      'uf', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      'uf', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _unidadeMeta =
       const VerificationMeta('unidade');
   @override
   late final GeneratedColumn<String> unidade = GeneratedColumn<String>(
-      'unidade', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      'unidade', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _ibgeMeta = const VerificationMeta('ibge');
   @override
   late final GeneratedColumn<String> ibge = GeneratedColumn<String>(
-      'ibge', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      'ibge', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _giaMeta = const VerificationMeta('gia');
   @override
   late final GeneratedColumn<String> gia = GeneratedColumn<String>(
-      'gia', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      'gia', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -288,61 +288,43 @@ class $AddressRowsTable extends AddressRows
     if (data.containsKey('cep')) {
       context.handle(
           _cepMeta, cep.isAcceptableOrUnknown(data['cep']!, _cepMeta));
-    } else if (isInserting) {
-      context.missing(_cepMeta);
     }
     if (data.containsKey('logradouro')) {
       context.handle(
           _logradouroMeta,
           logradouro.isAcceptableOrUnknown(
               data['logradouro']!, _logradouroMeta));
-    } else if (isInserting) {
-      context.missing(_logradouroMeta);
     }
     if (data.containsKey('complemento')) {
       context.handle(
           _complementoMeta,
           complemento.isAcceptableOrUnknown(
               data['complemento']!, _complementoMeta));
-    } else if (isInserting) {
-      context.missing(_complementoMeta);
     }
     if (data.containsKey('bairro')) {
       context.handle(_bairroMeta,
           bairro.isAcceptableOrUnknown(data['bairro']!, _bairroMeta));
-    } else if (isInserting) {
-      context.missing(_bairroMeta);
     }
     if (data.containsKey('localidade')) {
       context.handle(
           _localidadeMeta,
           localidade.isAcceptableOrUnknown(
               data['localidade']!, _localidadeMeta));
-    } else if (isInserting) {
-      context.missing(_localidadeMeta);
     }
     if (data.containsKey('uf')) {
       context.handle(_ufMeta, uf.isAcceptableOrUnknown(data['uf']!, _ufMeta));
-    } else if (isInserting) {
-      context.missing(_ufMeta);
     }
     if (data.containsKey('unidade')) {
       context.handle(_unidadeMeta,
           unidade.isAcceptableOrUnknown(data['unidade']!, _unidadeMeta));
-    } else if (isInserting) {
-      context.missing(_unidadeMeta);
     }
     if (data.containsKey('ibge')) {
       context.handle(
           _ibgeMeta, ibge.isAcceptableOrUnknown(data['ibge']!, _ibgeMeta));
-    } else if (isInserting) {
-      context.missing(_ibgeMeta);
     }
     if (data.containsKey('gia')) {
       context.handle(
           _giaMeta, gia.isAcceptableOrUnknown(data['gia']!, _giaMeta));
-    } else if (isInserting) {
-      context.missing(_giaMeta);
     }
     return context;
   }
@@ -358,23 +340,23 @@ class $AddressRowsTable extends AddressRows
       created: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}created'])!,
       cep: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}cep'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}cep']),
       logradouro: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}logradouro'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}logradouro']),
       complemento: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}complemento'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}complemento']),
       bairro: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}bairro'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}bairro']),
       localidade: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}localidade'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}localidade']),
       uf: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}uf'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}uf']),
       unidade: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}unidade'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}unidade']),
       ibge: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}ibge'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}ibge']),
       gia: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}gia'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}gia']),
     );
   }
 
@@ -387,41 +369,59 @@ class $AddressRowsTable extends AddressRows
 class AddressRow extends DataClass implements Insertable<AddressRow> {
   final String id;
   final DateTime created;
-  final String cep;
-  final String logradouro;
-  final String complemento;
-  final String bairro;
-  final String localidade;
-  final String uf;
-  final String unidade;
-  final String ibge;
-  final String gia;
+  final String? cep;
+  final String? logradouro;
+  final String? complemento;
+  final String? bairro;
+  final String? localidade;
+  final String? uf;
+  final String? unidade;
+  final String? ibge;
+  final String? gia;
   const AddressRow(
       {required this.id,
       required this.created,
-      required this.cep,
-      required this.logradouro,
-      required this.complemento,
-      required this.bairro,
-      required this.localidade,
-      required this.uf,
-      required this.unidade,
-      required this.ibge,
-      required this.gia});
+      this.cep,
+      this.logradouro,
+      this.complemento,
+      this.bairro,
+      this.localidade,
+      this.uf,
+      this.unidade,
+      this.ibge,
+      this.gia});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<String>(id);
     map['created'] = Variable<DateTime>(created);
-    map['cep'] = Variable<String>(cep);
-    map['logradouro'] = Variable<String>(logradouro);
-    map['complemento'] = Variable<String>(complemento);
-    map['bairro'] = Variable<String>(bairro);
-    map['localidade'] = Variable<String>(localidade);
-    map['uf'] = Variable<String>(uf);
-    map['unidade'] = Variable<String>(unidade);
-    map['ibge'] = Variable<String>(ibge);
-    map['gia'] = Variable<String>(gia);
+    if (!nullToAbsent || cep != null) {
+      map['cep'] = Variable<String>(cep);
+    }
+    if (!nullToAbsent || logradouro != null) {
+      map['logradouro'] = Variable<String>(logradouro);
+    }
+    if (!nullToAbsent || complemento != null) {
+      map['complemento'] = Variable<String>(complemento);
+    }
+    if (!nullToAbsent || bairro != null) {
+      map['bairro'] = Variable<String>(bairro);
+    }
+    if (!nullToAbsent || localidade != null) {
+      map['localidade'] = Variable<String>(localidade);
+    }
+    if (!nullToAbsent || uf != null) {
+      map['uf'] = Variable<String>(uf);
+    }
+    if (!nullToAbsent || unidade != null) {
+      map['unidade'] = Variable<String>(unidade);
+    }
+    if (!nullToAbsent || ibge != null) {
+      map['ibge'] = Variable<String>(ibge);
+    }
+    if (!nullToAbsent || gia != null) {
+      map['gia'] = Variable<String>(gia);
+    }
     return map;
   }
 
@@ -429,15 +429,24 @@ class AddressRow extends DataClass implements Insertable<AddressRow> {
     return AddressRowsCompanion(
       id: Value(id),
       created: Value(created),
-      cep: Value(cep),
-      logradouro: Value(logradouro),
-      complemento: Value(complemento),
-      bairro: Value(bairro),
-      localidade: Value(localidade),
-      uf: Value(uf),
-      unidade: Value(unidade),
-      ibge: Value(ibge),
-      gia: Value(gia),
+      cep: cep == null && nullToAbsent ? const Value.absent() : Value(cep),
+      logradouro: logradouro == null && nullToAbsent
+          ? const Value.absent()
+          : Value(logradouro),
+      complemento: complemento == null && nullToAbsent
+          ? const Value.absent()
+          : Value(complemento),
+      bairro:
+          bairro == null && nullToAbsent ? const Value.absent() : Value(bairro),
+      localidade: localidade == null && nullToAbsent
+          ? const Value.absent()
+          : Value(localidade),
+      uf: uf == null && nullToAbsent ? const Value.absent() : Value(uf),
+      unidade: unidade == null && nullToAbsent
+          ? const Value.absent()
+          : Value(unidade),
+      ibge: ibge == null && nullToAbsent ? const Value.absent() : Value(ibge),
+      gia: gia == null && nullToAbsent ? const Value.absent() : Value(gia),
     );
   }
 
@@ -447,15 +456,15 @@ class AddressRow extends DataClass implements Insertable<AddressRow> {
     return AddressRow(
       id: serializer.fromJson<String>(json['id']),
       created: serializer.fromJson<DateTime>(json['created']),
-      cep: serializer.fromJson<String>(json['cep']),
-      logradouro: serializer.fromJson<String>(json['logradouro']),
-      complemento: serializer.fromJson<String>(json['complemento']),
-      bairro: serializer.fromJson<String>(json['bairro']),
-      localidade: serializer.fromJson<String>(json['localidade']),
-      uf: serializer.fromJson<String>(json['uf']),
-      unidade: serializer.fromJson<String>(json['unidade']),
-      ibge: serializer.fromJson<String>(json['ibge']),
-      gia: serializer.fromJson<String>(json['gia']),
+      cep: serializer.fromJson<String?>(json['cep']),
+      logradouro: serializer.fromJson<String?>(json['logradouro']),
+      complemento: serializer.fromJson<String?>(json['complemento']),
+      bairro: serializer.fromJson<String?>(json['bairro']),
+      localidade: serializer.fromJson<String?>(json['localidade']),
+      uf: serializer.fromJson<String?>(json['uf']),
+      unidade: serializer.fromJson<String?>(json['unidade']),
+      ibge: serializer.fromJson<String?>(json['ibge']),
+      gia: serializer.fromJson<String?>(json['gia']),
     );
   }
   @override
@@ -464,42 +473,42 @@ class AddressRow extends DataClass implements Insertable<AddressRow> {
     return <String, dynamic>{
       'id': serializer.toJson<String>(id),
       'created': serializer.toJson<DateTime>(created),
-      'cep': serializer.toJson<String>(cep),
-      'logradouro': serializer.toJson<String>(logradouro),
-      'complemento': serializer.toJson<String>(complemento),
-      'bairro': serializer.toJson<String>(bairro),
-      'localidade': serializer.toJson<String>(localidade),
-      'uf': serializer.toJson<String>(uf),
-      'unidade': serializer.toJson<String>(unidade),
-      'ibge': serializer.toJson<String>(ibge),
-      'gia': serializer.toJson<String>(gia),
+      'cep': serializer.toJson<String?>(cep),
+      'logradouro': serializer.toJson<String?>(logradouro),
+      'complemento': serializer.toJson<String?>(complemento),
+      'bairro': serializer.toJson<String?>(bairro),
+      'localidade': serializer.toJson<String?>(localidade),
+      'uf': serializer.toJson<String?>(uf),
+      'unidade': serializer.toJson<String?>(unidade),
+      'ibge': serializer.toJson<String?>(ibge),
+      'gia': serializer.toJson<String?>(gia),
     };
   }
 
   AddressRow copyWith(
           {String? id,
           DateTime? created,
-          String? cep,
-          String? logradouro,
-          String? complemento,
-          String? bairro,
-          String? localidade,
-          String? uf,
-          String? unidade,
-          String? ibge,
-          String? gia}) =>
+          Value<String?> cep = const Value.absent(),
+          Value<String?> logradouro = const Value.absent(),
+          Value<String?> complemento = const Value.absent(),
+          Value<String?> bairro = const Value.absent(),
+          Value<String?> localidade = const Value.absent(),
+          Value<String?> uf = const Value.absent(),
+          Value<String?> unidade = const Value.absent(),
+          Value<String?> ibge = const Value.absent(),
+          Value<String?> gia = const Value.absent()}) =>
       AddressRow(
         id: id ?? this.id,
         created: created ?? this.created,
-        cep: cep ?? this.cep,
-        logradouro: logradouro ?? this.logradouro,
-        complemento: complemento ?? this.complemento,
-        bairro: bairro ?? this.bairro,
-        localidade: localidade ?? this.localidade,
-        uf: uf ?? this.uf,
-        unidade: unidade ?? this.unidade,
-        ibge: ibge ?? this.ibge,
-        gia: gia ?? this.gia,
+        cep: cep.present ? cep.value : this.cep,
+        logradouro: logradouro.present ? logradouro.value : this.logradouro,
+        complemento: complemento.present ? complemento.value : this.complemento,
+        bairro: bairro.present ? bairro.value : this.bairro,
+        localidade: localidade.present ? localidade.value : this.localidade,
+        uf: uf.present ? uf.value : this.uf,
+        unidade: unidade.present ? unidade.value : this.unidade,
+        ibge: ibge.present ? ibge.value : this.ibge,
+        gia: gia.present ? gia.value : this.gia,
       );
   @override
   String toString() {
@@ -542,15 +551,15 @@ class AddressRow extends DataClass implements Insertable<AddressRow> {
 class AddressRowsCompanion extends UpdateCompanion<AddressRow> {
   final Value<String> id;
   final Value<DateTime> created;
-  final Value<String> cep;
-  final Value<String> logradouro;
-  final Value<String> complemento;
-  final Value<String> bairro;
-  final Value<String> localidade;
-  final Value<String> uf;
-  final Value<String> unidade;
-  final Value<String> ibge;
-  final Value<String> gia;
+  final Value<String?> cep;
+  final Value<String?> logradouro;
+  final Value<String?> complemento;
+  final Value<String?> bairro;
+  final Value<String?> localidade;
+  final Value<String?> uf;
+  final Value<String?> unidade;
+  final Value<String?> ibge;
+  final Value<String?> gia;
   final Value<int> rowid;
   const AddressRowsCompanion({
     this.id = const Value.absent(),
@@ -569,27 +578,18 @@ class AddressRowsCompanion extends UpdateCompanion<AddressRow> {
   AddressRowsCompanion.insert({
     required String id,
     required DateTime created,
-    required String cep,
-    required String logradouro,
-    required String complemento,
-    required String bairro,
-    required String localidade,
-    required String uf,
-    required String unidade,
-    required String ibge,
-    required String gia,
+    this.cep = const Value.absent(),
+    this.logradouro = const Value.absent(),
+    this.complemento = const Value.absent(),
+    this.bairro = const Value.absent(),
+    this.localidade = const Value.absent(),
+    this.uf = const Value.absent(),
+    this.unidade = const Value.absent(),
+    this.ibge = const Value.absent(),
+    this.gia = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : id = Value(id),
-        created = Value(created),
-        cep = Value(cep),
-        logradouro = Value(logradouro),
-        complemento = Value(complemento),
-        bairro = Value(bairro),
-        localidade = Value(localidade),
-        uf = Value(uf),
-        unidade = Value(unidade),
-        ibge = Value(ibge),
-        gia = Value(gia);
+        created = Value(created);
   static Insertable<AddressRow> custom({
     Expression<String>? id,
     Expression<DateTime>? created,
@@ -623,15 +623,15 @@ class AddressRowsCompanion extends UpdateCompanion<AddressRow> {
   AddressRowsCompanion copyWith(
       {Value<String>? id,
       Value<DateTime>? created,
-      Value<String>? cep,
-      Value<String>? logradouro,
-      Value<String>? complemento,
-      Value<String>? bairro,
-      Value<String>? localidade,
-      Value<String>? uf,
-      Value<String>? unidade,
-      Value<String>? ibge,
-      Value<String>? gia,
+      Value<String?>? cep,
+      Value<String?>? logradouro,
+      Value<String?>? complemento,
+      Value<String?>? bairro,
+      Value<String?>? localidade,
+      Value<String?>? uf,
+      Value<String?>? unidade,
+      Value<String?>? ibge,
+      Value<String?>? gia,
       Value<int>? rowid}) {
     return AddressRowsCompanion(
       id: id ?? this.id,

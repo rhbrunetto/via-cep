@@ -4,7 +4,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:search_cep/search_cep.dart';
 
-import '../data/uf_list.dart';
 import '../models/address.dart';
 
 part 'address_bloc.freezed.dart';
@@ -25,15 +24,12 @@ class AddressState with _$AddressState {
 class AddressBloc extends Bloc<AddressEvent, AddressState> {
   AddressBloc({
     required ViaCepSearchCep cepClient,
-    required UfList ufList,
   })  : _cepClient = cepClient,
-        _ufList = ufList,
         super(const AddressState.none()) {
     on<AddressEvent>(_eventHandler);
   }
 
   final ViaCepSearchCep _cepClient;
-  final UfList _ufList;
 
   EventHandler<AddressEvent, AddressState> get _eventHandler =>
       (event, emit) => event.map(
@@ -55,7 +51,7 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
 
           return state
               .whenOrNull(editing: identity)
-              .maybeFlatMap((it) => it.merge(viaCep, _ufList))
+              .maybeFlatMap((it) => it.merge(viaCep))
               .maybeFlatMap(AddressState.editing)
               .ifNull(() => state);
         },
@@ -63,13 +59,13 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
 }
 
 extension on AddressData {
-  AddressData merge(ViaCepInfo viaCepInfo, UfList ufList) => copyWith(
+  AddressData merge(ViaCepInfo viaCepInfo) => copyWith(
         cep: viaCepInfo.cep ?? cep,
         logradouro: viaCepInfo.logradouro ?? logradouro,
         complemento: viaCepInfo.complemento ?? complemento,
         bairro: viaCepInfo.bairro ?? bairro,
         localidade: viaCepInfo.localidade ?? localidade,
-        uf: viaCepInfo.uf?.let(ufList.findUfBySigla) ?? uf,
+        uf: viaCepInfo.uf ?? uf,
         unidade: viaCepInfo.unidade ?? unidade,
         ibge: viaCepInfo.ibge ?? ibge,
         gia: viaCepInfo.gia ?? gia,

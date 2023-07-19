@@ -3,7 +3,6 @@ import 'package:injectable/injectable.dart';
 import 'package:search_cep/search_cep.dart';
 
 import 'di.config.dart';
-import 'features/address/data/uf_list.dart';
 
 final sl = GetIt.instance;
 
@@ -16,7 +15,4 @@ abstract class AppModule {
 
   @lazySingleton
   ViaCepSearchCep get viaCep => ViaCepSearchCep();
-  
-  @lazySingleton
-  UfList get tokenList => UfList();
 }

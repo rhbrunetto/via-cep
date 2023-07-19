@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../l10n/l10n.dart';
-import '../../../../ui/colors.dart';
 import '../../../../ui/textfield.dart';
 import '../../models/address.dart';
 
@@ -47,15 +46,15 @@ class _AddressFormState extends State<AddressForm> {
   }
 
   void _update(AddressData data) {
-    _cepInput.controller.text = data.cep;
-    _logradouroInput.controller.text = data.logradouro;
-    _complementoInput.controller.text = data.complemento;
-    _bairroInput.controller.text = data.bairro;
-    _localidadeInput.controller.text = data.localidade;
-    _ufInput.controller.text = data.uf;
-    _unidadeInput.controller.text = data.unidade;
-    _ibgeInput.controller.text = data.ibge;
-    _giaInput.controller.text = data.gia;
+    _cepInput.update(data.cep);
+    _logradouroInput.update(data.logradouro);
+    _complementoInput.update(data.complemento);
+    _bairroInput.update(data.bairro);
+    _localidadeInput.update(data.localidade);
+    _ufInput.update(data.uf);
+    _unidadeInput.update(data.unidade);
+    _ibgeInput.update(data.ibge);
+    _giaInput.update(data.gia);
 
     _cepInput.focusNode.requestFocus();
   }
@@ -143,4 +142,6 @@ class _Input {
 
   final TextEditingController controller;
   final FocusNode focusNode;
+
+  void update(String? text) => text != null ? controller.text = text : null;
 }

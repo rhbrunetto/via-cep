@@ -17,8 +17,8 @@ class AddressCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(
         child: ListTile(
-          title: Text(address.data.logradouro),
-          subtitle: Text(address.data.bairro),
+          title: Text(address.data.logradouro ?? ''),
+          subtitle: Text(address.data.bairro ?? ''),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [

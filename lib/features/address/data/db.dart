@@ -2,7 +2,6 @@ import 'package:drift/drift.dart';
 
 import '../../../core/db/db.dart';
 import '../models/address.dart';
-import 'uf_list.dart';
 
 class AddressRows extends Table {
   const AddressRows();
@@ -24,7 +23,7 @@ class AddressRows extends Table {
 }
 
 extension AddressModelExt on AddressRow {
-  Address toModel(UfList ufList) => Address(
+  Address toModel() => Address(
         id: id,
         created: created,
         data: AddressData(
@@ -33,7 +32,7 @@ extension AddressModelExt on AddressRow {
           complemento: complemento,
           bairro: bairro,
           localidade: localidade,
-          uf: ufList.findUfBySigla(uf),
+          uf: uf,
           unidade: unidade,
           ibge: ibge,
           gia: gia,
@@ -50,7 +49,7 @@ extension AddressRowExt on Address {
         complemento: data.complemento,
         bairro: data.bairro,
         localidade: data.localidade,
-        uf: data.uf.sigla,
+        uf: data.uf,
         unidade: data.unidade,
         ibge: data.ibge,
         gia: data.gia,
