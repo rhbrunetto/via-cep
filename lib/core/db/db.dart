@@ -2,7 +2,8 @@ import 'package:drift/drift.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
-import '../account/data/account_repository.dart';
+import '../../features/address/data/db.dart';
+import '../account/data/db.dart';
 import 'open_connection.dart';
 
 part 'db.g.dart';
@@ -12,6 +13,7 @@ const int latestVersion = 1;
 
 const _tables = [
   AccountRows,
+  AddressRows,
 ];
 
 @lazySingleton
@@ -31,6 +33,7 @@ class AvaDatabase extends _$AvaDatabase {
         onUpgrade: (Migrator m, int from, int to) async {
           if (from < 1) {
             await m.createTable(accountRows);
+            await m.createTable(addressRows);
           }
         },
       );

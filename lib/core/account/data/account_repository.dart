@@ -1,8 +1,8 @@
-import 'package:drift/drift.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../db/db.dart';
 import '../models/account_data.dart';
+import 'db.dart';
 
 @injectable
 class AccountRepository {
@@ -23,20 +23,4 @@ class AccountRepository {
   Future<void> clear() async {
     await _db.delete(_db.accountRows).go();
   }
-}
-
-// This can be moved to a local datasource if we go full clean-arch
-class AccountRows extends Table {
-  const AccountRows();
-
-  TextColumn get name => text()();
-  TextColumn get email => text()();
-}
-
-extension on AccountRow {
-  AccountData toModel() => AccountData(userName: name, email: email);
-}
-
-extension on AccountData {
-  AccountRow toDto() => AccountRow(name: userName, email: email);
 }

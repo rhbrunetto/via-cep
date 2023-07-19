@@ -38,12 +38,14 @@ class _AvaAppState extends State<AvaApp> {
       routerDelegate: AutoRouterDelegate.declarative(
         _router,
         routes: (_) => [
+          // TODO(rhbrunetto): fix navigation
           if (isAuthenticated)
             const AddressRoute()
           else if (isLoading)
             const SplashRoute()
           else
-            const SignInRoute(),
+            // const SignInRoute(),
+            const AddressRoute()
         ],
       ),
       debugShowCheckedModeBanner: false,
