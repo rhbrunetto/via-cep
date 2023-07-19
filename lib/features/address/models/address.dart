@@ -14,14 +14,12 @@ class Address with _$Address {
 @freezed
 class AddressData with _$AddressData {
   const factory AddressData({
-    String? cep,
-    String? logradouro,
-    String? complemento,
-    String? bairro,
-    String? localidade,
-    String? uf,
-    String? unidade,
-    String? ibge,
-    String? gia,
+    required String zipcode,
+    required String street,
+    required String? number,
+    required String? additional,
+    required String neighborhood,
+    required String city,
+    required String state,
   }) = _AddressData;
 }

@@ -202,68 +202,55 @@ class $AddressRowsTable extends AddressRows
   late final GeneratedColumn<DateTime> created = GeneratedColumn<DateTime>(
       'created', aliasedName, false,
       type: DriftSqlType.dateTime, requiredDuringInsert: true);
-  static const VerificationMeta _cepMeta = const VerificationMeta('cep');
+  static const VerificationMeta _zipcodeMeta =
+      const VerificationMeta('zipcode');
   @override
-  late final GeneratedColumn<String> cep = GeneratedColumn<String>(
-      'cep', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _logradouroMeta =
-      const VerificationMeta('logradouro');
+  late final GeneratedColumn<String> zipcode = GeneratedColumn<String>(
+      'zipcode', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _streetMeta = const VerificationMeta('street');
   @override
-  late final GeneratedColumn<String> logradouro = GeneratedColumn<String>(
-      'logradouro', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _complementoMeta =
-      const VerificationMeta('complemento');
+  late final GeneratedColumn<String> street = GeneratedColumn<String>(
+      'street', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _additionalMeta =
+      const VerificationMeta('additional');
   @override
-  late final GeneratedColumn<String> complemento = GeneratedColumn<String>(
-      'complemento', aliasedName, true,
+  late final GeneratedColumn<String> additional = GeneratedColumn<String>(
+      'additional', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _bairroMeta = const VerificationMeta('bairro');
+  static const VerificationMeta _numberMeta = const VerificationMeta('number');
   @override
-  late final GeneratedColumn<String> bairro = GeneratedColumn<String>(
-      'bairro', aliasedName, true,
+  late final GeneratedColumn<String> number = GeneratedColumn<String>(
+      'number', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _localidadeMeta =
-      const VerificationMeta('localidade');
+  static const VerificationMeta _neighborhoodMeta =
+      const VerificationMeta('neighborhood');
   @override
-  late final GeneratedColumn<String> localidade = GeneratedColumn<String>(
-      'localidade', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _ufMeta = const VerificationMeta('uf');
+  late final GeneratedColumn<String> neighborhood = GeneratedColumn<String>(
+      'neighborhood', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _cityMeta = const VerificationMeta('city');
   @override
-  late final GeneratedColumn<String> uf = GeneratedColumn<String>(
-      'uf', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _unidadeMeta =
-      const VerificationMeta('unidade');
+  late final GeneratedColumn<String> city = GeneratedColumn<String>(
+      'city', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _stateMeta = const VerificationMeta('state');
   @override
-  late final GeneratedColumn<String> unidade = GeneratedColumn<String>(
-      'unidade', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _ibgeMeta = const VerificationMeta('ibge');
-  @override
-  late final GeneratedColumn<String> ibge = GeneratedColumn<String>(
-      'ibge', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _giaMeta = const VerificationMeta('gia');
-  @override
-  late final GeneratedColumn<String> gia = GeneratedColumn<String>(
-      'gia', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
+  late final GeneratedColumn<String> state = GeneratedColumn<String>(
+      'state', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [
         id,
         created,
-        cep,
-        logradouro,
-        complemento,
-        bairro,
-        localidade,
-        uf,
-        unidade,
-        ibge,
-        gia
+        zipcode,
+        street,
+        additional,
+        number,
+        neighborhood,
+        city,
+        state
       ];
   @override
   String get aliasedName => _alias ?? 'address_rows';
@@ -285,46 +272,47 @@ class $AddressRowsTable extends AddressRows
     } else if (isInserting) {
       context.missing(_createdMeta);
     }
-    if (data.containsKey('cep')) {
+    if (data.containsKey('zipcode')) {
+      context.handle(_zipcodeMeta,
+          zipcode.isAcceptableOrUnknown(data['zipcode']!, _zipcodeMeta));
+    } else if (isInserting) {
+      context.missing(_zipcodeMeta);
+    }
+    if (data.containsKey('street')) {
+      context.handle(_streetMeta,
+          street.isAcceptableOrUnknown(data['street']!, _streetMeta));
+    } else if (isInserting) {
+      context.missing(_streetMeta);
+    }
+    if (data.containsKey('additional')) {
       context.handle(
-          _cepMeta, cep.isAcceptableOrUnknown(data['cep']!, _cepMeta));
+          _additionalMeta,
+          additional.isAcceptableOrUnknown(
+              data['additional']!, _additionalMeta));
     }
-    if (data.containsKey('logradouro')) {
+    if (data.containsKey('number')) {
+      context.handle(_numberMeta,
+          number.isAcceptableOrUnknown(data['number']!, _numberMeta));
+    }
+    if (data.containsKey('neighborhood')) {
       context.handle(
-          _logradouroMeta,
-          logradouro.isAcceptableOrUnknown(
-              data['logradouro']!, _logradouroMeta));
+          _neighborhoodMeta,
+          neighborhood.isAcceptableOrUnknown(
+              data['neighborhood']!, _neighborhoodMeta));
+    } else if (isInserting) {
+      context.missing(_neighborhoodMeta);
     }
-    if (data.containsKey('complemento')) {
+    if (data.containsKey('city')) {
       context.handle(
-          _complementoMeta,
-          complemento.isAcceptableOrUnknown(
-              data['complemento']!, _complementoMeta));
+          _cityMeta, city.isAcceptableOrUnknown(data['city']!, _cityMeta));
+    } else if (isInserting) {
+      context.missing(_cityMeta);
     }
-    if (data.containsKey('bairro')) {
-      context.handle(_bairroMeta,
-          bairro.isAcceptableOrUnknown(data['bairro']!, _bairroMeta));
-    }
-    if (data.containsKey('localidade')) {
+    if (data.containsKey('state')) {
       context.handle(
-          _localidadeMeta,
-          localidade.isAcceptableOrUnknown(
-              data['localidade']!, _localidadeMeta));
-    }
-    if (data.containsKey('uf')) {
-      context.handle(_ufMeta, uf.isAcceptableOrUnknown(data['uf']!, _ufMeta));
-    }
-    if (data.containsKey('unidade')) {
-      context.handle(_unidadeMeta,
-          unidade.isAcceptableOrUnknown(data['unidade']!, _unidadeMeta));
-    }
-    if (data.containsKey('ibge')) {
-      context.handle(
-          _ibgeMeta, ibge.isAcceptableOrUnknown(data['ibge']!, _ibgeMeta));
-    }
-    if (data.containsKey('gia')) {
-      context.handle(
-          _giaMeta, gia.isAcceptableOrUnknown(data['gia']!, _giaMeta));
+          _stateMeta, state.isAcceptableOrUnknown(data['state']!, _stateMeta));
+    } else if (isInserting) {
+      context.missing(_stateMeta);
     }
     return context;
   }
@@ -339,24 +327,20 @@ class $AddressRowsTable extends AddressRows
           .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
       created: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}created'])!,
-      cep: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}cep']),
-      logradouro: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}logradouro']),
-      complemento: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}complemento']),
-      bairro: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}bairro']),
-      localidade: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}localidade']),
-      uf: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}uf']),
-      unidade: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}unidade']),
-      ibge: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}ibge']),
-      gia: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}gia']),
+      zipcode: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}zipcode'])!,
+      street: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}street'])!,
+      additional: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}additional']),
+      number: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}number']),
+      neighborhood: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}neighborhood'])!,
+      city: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}city'])!,
+      state: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}state'])!,
     );
   }
 
@@ -369,59 +353,39 @@ class $AddressRowsTable extends AddressRows
 class AddressRow extends DataClass implements Insertable<AddressRow> {
   final String id;
   final DateTime created;
-  final String? cep;
-  final String? logradouro;
-  final String? complemento;
-  final String? bairro;
-  final String? localidade;
-  final String? uf;
-  final String? unidade;
-  final String? ibge;
-  final String? gia;
+  final String zipcode;
+  final String street;
+  final String? additional;
+  final String? number;
+  final String neighborhood;
+  final String city;
+  final String state;
   const AddressRow(
       {required this.id,
       required this.created,
-      this.cep,
-      this.logradouro,
-      this.complemento,
-      this.bairro,
-      this.localidade,
-      this.uf,
-      this.unidade,
-      this.ibge,
-      this.gia});
+      required this.zipcode,
+      required this.street,
+      this.additional,
+      this.number,
+      required this.neighborhood,
+      required this.city,
+      required this.state});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<String>(id);
     map['created'] = Variable<DateTime>(created);
-    if (!nullToAbsent || cep != null) {
-      map['cep'] = Variable<String>(cep);
+    map['zipcode'] = Variable<String>(zipcode);
+    map['street'] = Variable<String>(street);
+    if (!nullToAbsent || additional != null) {
+      map['additional'] = Variable<String>(additional);
     }
-    if (!nullToAbsent || logradouro != null) {
-      map['logradouro'] = Variable<String>(logradouro);
+    if (!nullToAbsent || number != null) {
+      map['number'] = Variable<String>(number);
     }
-    if (!nullToAbsent || complemento != null) {
-      map['complemento'] = Variable<String>(complemento);
-    }
-    if (!nullToAbsent || bairro != null) {
-      map['bairro'] = Variable<String>(bairro);
-    }
-    if (!nullToAbsent || localidade != null) {
-      map['localidade'] = Variable<String>(localidade);
-    }
-    if (!nullToAbsent || uf != null) {
-      map['uf'] = Variable<String>(uf);
-    }
-    if (!nullToAbsent || unidade != null) {
-      map['unidade'] = Variable<String>(unidade);
-    }
-    if (!nullToAbsent || ibge != null) {
-      map['ibge'] = Variable<String>(ibge);
-    }
-    if (!nullToAbsent || gia != null) {
-      map['gia'] = Variable<String>(gia);
-    }
+    map['neighborhood'] = Variable<String>(neighborhood);
+    map['city'] = Variable<String>(city);
+    map['state'] = Variable<String>(state);
     return map;
   }
 
@@ -429,24 +393,16 @@ class AddressRow extends DataClass implements Insertable<AddressRow> {
     return AddressRowsCompanion(
       id: Value(id),
       created: Value(created),
-      cep: cep == null && nullToAbsent ? const Value.absent() : Value(cep),
-      logradouro: logradouro == null && nullToAbsent
+      zipcode: Value(zipcode),
+      street: Value(street),
+      additional: additional == null && nullToAbsent
           ? const Value.absent()
-          : Value(logradouro),
-      complemento: complemento == null && nullToAbsent
-          ? const Value.absent()
-          : Value(complemento),
-      bairro:
-          bairro == null && nullToAbsent ? const Value.absent() : Value(bairro),
-      localidade: localidade == null && nullToAbsent
-          ? const Value.absent()
-          : Value(localidade),
-      uf: uf == null && nullToAbsent ? const Value.absent() : Value(uf),
-      unidade: unidade == null && nullToAbsent
-          ? const Value.absent()
-          : Value(unidade),
-      ibge: ibge == null && nullToAbsent ? const Value.absent() : Value(ibge),
-      gia: gia == null && nullToAbsent ? const Value.absent() : Value(gia),
+          : Value(additional),
+      number:
+          number == null && nullToAbsent ? const Value.absent() : Value(number),
+      neighborhood: Value(neighborhood),
+      city: Value(city),
+      state: Value(state),
     );
   }
 
@@ -456,15 +412,13 @@ class AddressRow extends DataClass implements Insertable<AddressRow> {
     return AddressRow(
       id: serializer.fromJson<String>(json['id']),
       created: serializer.fromJson<DateTime>(json['created']),
-      cep: serializer.fromJson<String?>(json['cep']),
-      logradouro: serializer.fromJson<String?>(json['logradouro']),
-      complemento: serializer.fromJson<String?>(json['complemento']),
-      bairro: serializer.fromJson<String?>(json['bairro']),
-      localidade: serializer.fromJson<String?>(json['localidade']),
-      uf: serializer.fromJson<String?>(json['uf']),
-      unidade: serializer.fromJson<String?>(json['unidade']),
-      ibge: serializer.fromJson<String?>(json['ibge']),
-      gia: serializer.fromJson<String?>(json['gia']),
+      zipcode: serializer.fromJson<String>(json['zipcode']),
+      street: serializer.fromJson<String>(json['street']),
+      additional: serializer.fromJson<String?>(json['additional']),
+      number: serializer.fromJson<String?>(json['number']),
+      neighborhood: serializer.fromJson<String>(json['neighborhood']),
+      city: serializer.fromJson<String>(json['city']),
+      state: serializer.fromJson<String>(json['state']),
     );
   }
   @override
@@ -473,149 +427,134 @@ class AddressRow extends DataClass implements Insertable<AddressRow> {
     return <String, dynamic>{
       'id': serializer.toJson<String>(id),
       'created': serializer.toJson<DateTime>(created),
-      'cep': serializer.toJson<String?>(cep),
-      'logradouro': serializer.toJson<String?>(logradouro),
-      'complemento': serializer.toJson<String?>(complemento),
-      'bairro': serializer.toJson<String?>(bairro),
-      'localidade': serializer.toJson<String?>(localidade),
-      'uf': serializer.toJson<String?>(uf),
-      'unidade': serializer.toJson<String?>(unidade),
-      'ibge': serializer.toJson<String?>(ibge),
-      'gia': serializer.toJson<String?>(gia),
+      'zipcode': serializer.toJson<String>(zipcode),
+      'street': serializer.toJson<String>(street),
+      'additional': serializer.toJson<String?>(additional),
+      'number': serializer.toJson<String?>(number),
+      'neighborhood': serializer.toJson<String>(neighborhood),
+      'city': serializer.toJson<String>(city),
+      'state': serializer.toJson<String>(state),
     };
   }
 
   AddressRow copyWith(
           {String? id,
           DateTime? created,
-          Value<String?> cep = const Value.absent(),
-          Value<String?> logradouro = const Value.absent(),
-          Value<String?> complemento = const Value.absent(),
-          Value<String?> bairro = const Value.absent(),
-          Value<String?> localidade = const Value.absent(),
-          Value<String?> uf = const Value.absent(),
-          Value<String?> unidade = const Value.absent(),
-          Value<String?> ibge = const Value.absent(),
-          Value<String?> gia = const Value.absent()}) =>
+          String? zipcode,
+          String? street,
+          Value<String?> additional = const Value.absent(),
+          Value<String?> number = const Value.absent(),
+          String? neighborhood,
+          String? city,
+          String? state}) =>
       AddressRow(
         id: id ?? this.id,
         created: created ?? this.created,
-        cep: cep.present ? cep.value : this.cep,
-        logradouro: logradouro.present ? logradouro.value : this.logradouro,
-        complemento: complemento.present ? complemento.value : this.complemento,
-        bairro: bairro.present ? bairro.value : this.bairro,
-        localidade: localidade.present ? localidade.value : this.localidade,
-        uf: uf.present ? uf.value : this.uf,
-        unidade: unidade.present ? unidade.value : this.unidade,
-        ibge: ibge.present ? ibge.value : this.ibge,
-        gia: gia.present ? gia.value : this.gia,
+        zipcode: zipcode ?? this.zipcode,
+        street: street ?? this.street,
+        additional: additional.present ? additional.value : this.additional,
+        number: number.present ? number.value : this.number,
+        neighborhood: neighborhood ?? this.neighborhood,
+        city: city ?? this.city,
+        state: state ?? this.state,
       );
   @override
   String toString() {
     return (StringBuffer('AddressRow(')
           ..write('id: $id, ')
           ..write('created: $created, ')
-          ..write('cep: $cep, ')
-          ..write('logradouro: $logradouro, ')
-          ..write('complemento: $complemento, ')
-          ..write('bairro: $bairro, ')
-          ..write('localidade: $localidade, ')
-          ..write('uf: $uf, ')
-          ..write('unidade: $unidade, ')
-          ..write('ibge: $ibge, ')
-          ..write('gia: $gia')
+          ..write('zipcode: $zipcode, ')
+          ..write('street: $street, ')
+          ..write('additional: $additional, ')
+          ..write('number: $number, ')
+          ..write('neighborhood: $neighborhood, ')
+          ..write('city: $city, ')
+          ..write('state: $state')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, created, cep, logradouro, complemento,
-      bairro, localidade, uf, unidade, ibge, gia);
+  int get hashCode => Object.hash(id, created, zipcode, street, additional,
+      number, neighborhood, city, state);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is AddressRow &&
           other.id == this.id &&
           other.created == this.created &&
-          other.cep == this.cep &&
-          other.logradouro == this.logradouro &&
-          other.complemento == this.complemento &&
-          other.bairro == this.bairro &&
-          other.localidade == this.localidade &&
-          other.uf == this.uf &&
-          other.unidade == this.unidade &&
-          other.ibge == this.ibge &&
-          other.gia == this.gia);
+          other.zipcode == this.zipcode &&
+          other.street == this.street &&
+          other.additional == this.additional &&
+          other.number == this.number &&
+          other.neighborhood == this.neighborhood &&
+          other.city == this.city &&
+          other.state == this.state);
 }
 
 class AddressRowsCompanion extends UpdateCompanion<AddressRow> {
   final Value<String> id;
   final Value<DateTime> created;
-  final Value<String?> cep;
-  final Value<String?> logradouro;
-  final Value<String?> complemento;
-  final Value<String?> bairro;
-  final Value<String?> localidade;
-  final Value<String?> uf;
-  final Value<String?> unidade;
-  final Value<String?> ibge;
-  final Value<String?> gia;
+  final Value<String> zipcode;
+  final Value<String> street;
+  final Value<String?> additional;
+  final Value<String?> number;
+  final Value<String> neighborhood;
+  final Value<String> city;
+  final Value<String> state;
   final Value<int> rowid;
   const AddressRowsCompanion({
     this.id = const Value.absent(),
     this.created = const Value.absent(),
-    this.cep = const Value.absent(),
-    this.logradouro = const Value.absent(),
-    this.complemento = const Value.absent(),
-    this.bairro = const Value.absent(),
-    this.localidade = const Value.absent(),
-    this.uf = const Value.absent(),
-    this.unidade = const Value.absent(),
-    this.ibge = const Value.absent(),
-    this.gia = const Value.absent(),
+    this.zipcode = const Value.absent(),
+    this.street = const Value.absent(),
+    this.additional = const Value.absent(),
+    this.number = const Value.absent(),
+    this.neighborhood = const Value.absent(),
+    this.city = const Value.absent(),
+    this.state = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   AddressRowsCompanion.insert({
     required String id,
     required DateTime created,
-    this.cep = const Value.absent(),
-    this.logradouro = const Value.absent(),
-    this.complemento = const Value.absent(),
-    this.bairro = const Value.absent(),
-    this.localidade = const Value.absent(),
-    this.uf = const Value.absent(),
-    this.unidade = const Value.absent(),
-    this.ibge = const Value.absent(),
-    this.gia = const Value.absent(),
+    required String zipcode,
+    required String street,
+    this.additional = const Value.absent(),
+    this.number = const Value.absent(),
+    required String neighborhood,
+    required String city,
+    required String state,
     this.rowid = const Value.absent(),
   })  : id = Value(id),
-        created = Value(created);
+        created = Value(created),
+        zipcode = Value(zipcode),
+        street = Value(street),
+        neighborhood = Value(neighborhood),
+        city = Value(city),
+        state = Value(state);
   static Insertable<AddressRow> custom({
     Expression<String>? id,
     Expression<DateTime>? created,
-    Expression<String>? cep,
-    Expression<String>? logradouro,
-    Expression<String>? complemento,
-    Expression<String>? bairro,
-    Expression<String>? localidade,
-    Expression<String>? uf,
-    Expression<String>? unidade,
-    Expression<String>? ibge,
-    Expression<String>? gia,
+    Expression<String>? zipcode,
+    Expression<String>? street,
+    Expression<String>? additional,
+    Expression<String>? number,
+    Expression<String>? neighborhood,
+    Expression<String>? city,
+    Expression<String>? state,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (created != null) 'created': created,
-      if (cep != null) 'cep': cep,
-      if (logradouro != null) 'logradouro': logradouro,
-      if (complemento != null) 'complemento': complemento,
-      if (bairro != null) 'bairro': bairro,
-      if (localidade != null) 'localidade': localidade,
-      if (uf != null) 'uf': uf,
-      if (unidade != null) 'unidade': unidade,
-      if (ibge != null) 'ibge': ibge,
-      if (gia != null) 'gia': gia,
+      if (zipcode != null) 'zipcode': zipcode,
+      if (street != null) 'street': street,
+      if (additional != null) 'additional': additional,
+      if (number != null) 'number': number,
+      if (neighborhood != null) 'neighborhood': neighborhood,
+      if (city != null) 'city': city,
+      if (state != null) 'state': state,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -623,28 +562,24 @@ class AddressRowsCompanion extends UpdateCompanion<AddressRow> {
   AddressRowsCompanion copyWith(
       {Value<String>? id,
       Value<DateTime>? created,
-      Value<String?>? cep,
-      Value<String?>? logradouro,
-      Value<String?>? complemento,
-      Value<String?>? bairro,
-      Value<String?>? localidade,
-      Value<String?>? uf,
-      Value<String?>? unidade,
-      Value<String?>? ibge,
-      Value<String?>? gia,
+      Value<String>? zipcode,
+      Value<String>? street,
+      Value<String?>? additional,
+      Value<String?>? number,
+      Value<String>? neighborhood,
+      Value<String>? city,
+      Value<String>? state,
       Value<int>? rowid}) {
     return AddressRowsCompanion(
       id: id ?? this.id,
       created: created ?? this.created,
-      cep: cep ?? this.cep,
-      logradouro: logradouro ?? this.logradouro,
-      complemento: complemento ?? this.complemento,
-      bairro: bairro ?? this.bairro,
-      localidade: localidade ?? this.localidade,
-      uf: uf ?? this.uf,
-      unidade: unidade ?? this.unidade,
-      ibge: ibge ?? this.ibge,
-      gia: gia ?? this.gia,
+      zipcode: zipcode ?? this.zipcode,
+      street: street ?? this.street,
+      additional: additional ?? this.additional,
+      number: number ?? this.number,
+      neighborhood: neighborhood ?? this.neighborhood,
+      city: city ?? this.city,
+      state: state ?? this.state,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -658,32 +593,26 @@ class AddressRowsCompanion extends UpdateCompanion<AddressRow> {
     if (created.present) {
       map['created'] = Variable<DateTime>(created.value);
     }
-    if (cep.present) {
-      map['cep'] = Variable<String>(cep.value);
+    if (zipcode.present) {
+      map['zipcode'] = Variable<String>(zipcode.value);
     }
-    if (logradouro.present) {
-      map['logradouro'] = Variable<String>(logradouro.value);
+    if (street.present) {
+      map['street'] = Variable<String>(street.value);
     }
-    if (complemento.present) {
-      map['complemento'] = Variable<String>(complemento.value);
+    if (additional.present) {
+      map['additional'] = Variable<String>(additional.value);
     }
-    if (bairro.present) {
-      map['bairro'] = Variable<String>(bairro.value);
+    if (number.present) {
+      map['number'] = Variable<String>(number.value);
     }
-    if (localidade.present) {
-      map['localidade'] = Variable<String>(localidade.value);
+    if (neighborhood.present) {
+      map['neighborhood'] = Variable<String>(neighborhood.value);
     }
-    if (uf.present) {
-      map['uf'] = Variable<String>(uf.value);
+    if (city.present) {
+      map['city'] = Variable<String>(city.value);
     }
-    if (unidade.present) {
-      map['unidade'] = Variable<String>(unidade.value);
-    }
-    if (ibge.present) {
-      map['ibge'] = Variable<String>(ibge.value);
-    }
-    if (gia.present) {
-      map['gia'] = Variable<String>(gia.value);
+    if (state.present) {
+      map['state'] = Variable<String>(state.value);
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -696,15 +625,13 @@ class AddressRowsCompanion extends UpdateCompanion<AddressRow> {
     return (StringBuffer('AddressRowsCompanion(')
           ..write('id: $id, ')
           ..write('created: $created, ')
-          ..write('cep: $cep, ')
-          ..write('logradouro: $logradouro, ')
-          ..write('complemento: $complemento, ')
-          ..write('bairro: $bairro, ')
-          ..write('localidade: $localidade, ')
-          ..write('uf: $uf, ')
-          ..write('unidade: $unidade, ')
-          ..write('ibge: $ibge, ')
-          ..write('gia: $gia, ')
+          ..write('zipcode: $zipcode, ')
+          ..write('street: $street, ')
+          ..write('additional: $additional, ')
+          ..write('number: $number, ')
+          ..write('neighborhood: $neighborhood, ')
+          ..write('city: $city, ')
+          ..write('state: $state, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();

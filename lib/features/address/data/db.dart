@@ -8,15 +8,13 @@ class AddressRows extends Table {
 
   TextColumn get id => text()();
   DateTimeColumn get created => dateTime()();
-  TextColumn get cep => text().nullable()();
-  TextColumn get logradouro => text().nullable()();
-  TextColumn get complemento => text().nullable()();
-  TextColumn get bairro => text().nullable()();
-  TextColumn get localidade => text().nullable()();
-  TextColumn get uf => text().nullable()();
-  TextColumn get unidade => text().nullable()();
-  TextColumn get ibge => text().nullable()();
-  TextColumn get gia => text().nullable()();
+  TextColumn get zipcode => text()();
+  TextColumn get street => text()();
+  TextColumn get additional => text().nullable()();
+  TextColumn get number => text().nullable()();
+  TextColumn get neighborhood => text()();
+  TextColumn get city => text()();
+  TextColumn get state => text()();
 
   @override
   Set<Column<Object>> get primaryKey => {id};
@@ -27,15 +25,13 @@ extension AddressModelExt on AddressRow {
         id: id,
         created: created,
         data: AddressData(
-          cep: cep,
-          logradouro: logradouro,
-          complemento: complemento,
-          bairro: bairro,
-          localidade: localidade,
-          uf: uf,
-          unidade: unidade,
-          ibge: ibge,
-          gia: gia,
+          zipcode: zipcode,
+          street: street,
+          additional: additional,
+          number: number,
+          neighborhood: neighborhood,
+          city: city,
+          state: state,
         ),
       );
 }
@@ -44,14 +40,12 @@ extension AddressRowExt on Address {
   AddressRow toDto() => AddressRow(
         id: id,
         created: created,
-        cep: data.cep,
-        logradouro: data.logradouro,
-        complemento: data.complemento,
-        bairro: data.bairro,
-        localidade: data.localidade,
-        uf: data.uf,
-        unidade: data.unidade,
-        ibge: data.ibge,
-        gia: data.gia,
+        zipcode: data.zipcode,
+        street: data.street,
+        additional: data.additional,
+        number: data.number,
+        neighborhood: data.neighborhood,
+        city: data.city,
+        state: data.state,
       );
 }

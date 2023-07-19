@@ -28,11 +28,11 @@ class AddressFormScreen extends StatelessWidget {
           ),
           body: BlocBuilder<AddressBloc, AddressState>(
             builder: (context, state) => state.map(
-              none: always(Container()),
+              none: always(const SizedBox.shrink()),
               editing: (state) => AddressForm(
                 data: state.data,
-                onCep: (cep) =>
-                    context.read<AddressBloc>().add(AddressEvent.search(cep)),
+                onZipCode: (it) =>
+                    context.read<AddressBloc>().add(AddressEvent.search(it)),
                 onSubmit: (data) => context.router.pop(data),
               ),
             ),

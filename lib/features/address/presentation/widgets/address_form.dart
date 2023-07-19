@@ -11,12 +11,12 @@ class AddressForm extends StatefulWidget {
   const AddressForm({
     super.key,
     required this.data,
-    required this.onCep,
+    required this.onZipCode,
     required this.onSubmit,
   });
 
   final AddressData? data;
-  final ValueSetter<String> onCep;
+  final ValueSetter<String> onZipCode;
   final ValueSetter<AddressData> onSubmit;
 
   @override
@@ -25,19 +25,26 @@ class AddressForm extends StatefulWidget {
 
 class _AddressFormState extends State<AddressForm> {
   final _formKey = GlobalKey<FormState>();
-  final _cepController = TextEditingController();
-  final _logradouroController = TextEditingController();
-  final _complementoController = TextEditingController();
-  final _bairroController = TextEditingController();
-  final _localidadeController = TextEditingController();
-  final _ufController = TextEditingController();
-  final _unidadeController = TextEditingController();
+  final _zipcodeController = TextEditingController();
+  final _streetController = TextEditingController();
+  final _additionalController = TextEditingController();
+  final _numberController = TextEditingController();
+  final _neighborhoodController = TextEditingController();
+  final _cityController = TextEditingController();
+  final _stateController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     final data = widget.data;
     if (data != null) _update(data);
+    _zipcodeController.addListener(_onZipCodeUpdate);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _zipcodeController.removeListener(_onZipCodeUpdate);
   }
 
   @override
@@ -48,13 +55,20 @@ class _AddressFormState extends State<AddressForm> {
   }
 
   void _update(AddressData data) {
-    _cepController.update(data.cep);
-    _logradouroController.update(data.logradouro);
-    _complementoController.update(data.complemento);
-    _bairroController.update(data.bairro);
-    _localidadeController.update(data.localidade);
-    _ufController.update(data.uf);
-    _unidadeController.update(data.unidade);
+    if (data.zipcode != _zipcodeController.text) {
+      _zipcodeController.update(data.zipcode);
+    }
+    _streetController.update(data.street);
+    _additionalController.update(data.additional);
+    _numberController.update(data.number);
+    _neighborhoodController.update(data.neighborhood);
+    _cityController.update(data.city);
+    _stateController.update(data.state);
+  }
+
+  void _onZipCodeUpdate() {
+    final zipCode = _zipcodeController.text;
+    widget.onZipCode(zipCode);
   }
 
   void _onSubmit() {
@@ -63,13 +77,13 @@ class _AddressFormState extends State<AddressForm> {
 
     widget.onSubmit(
       AddressData(
-        cep: _cepController.text,
-        logradouro: _logradouroController.text,
-        complemento: _complementoController.text,
-        bairro: _bairroController.text,
-        localidade: _localidadeController.text,
-        uf: _ufController.text,
-        unidade: _unidadeController.text,
+        zipcode: _zipcodeController.text,
+        street: _streetController.text,
+        additional: _additionalController.text,
+        number: _numberController.text,
+        neighborhood: _neighborhoodController.text,
+        city: _cityController.text,
+        state: _stateController.text,
       ),
     );
   }
@@ -83,12 +97,9 @@ class _AddressFormState extends State<AddressForm> {
             shrinkWrap: true,
             children: [
               AvaTextField(
-                controller: _cepController,
-                label: context.l10n.cep,
-                validators: [
-                  context.requiredValidator(),
-                ],
-                // onChanged: widget.onCep,
+                controller: _zipcodeController,
+                label: context.l10n.zipcode,
+                validators: [context.requiredValidator()],
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,42 +107,46 @@ class _AddressFormState extends State<AddressForm> {
                   Flexible(
                     flex: 3,
                     child: AvaTextField(
-                      controller: _logradouroController,
-                      label: context.l10n.logradouro,
-                      validators: [
-                        context.requiredValidator(),
-                      ],
+                      controller: _streetController,
+                      label: context.l10n.street,
+                      validators: [context.requiredValidator()],
                     ),
                   ),
                   const SizedBox(width: 8),
                   Flexible(
                     flex: 1,
                     child: AvaTextField(
-                      controller: _complementoController,
-                      label: context.l10n.complemento,
+                      controller: _numberController,
+                      label: context.l10n.number,
                     ),
                   ),
                 ],
               ),
               AvaTextField(
-                controller: _bairroController,
-                label: context.l10n.bairro,
+                controller: _additionalController,
+                label: context.l10n.additional,
+              ),
+              AvaTextField(
+                controller: _neighborhoodController,
+                label: context.l10n.neighborhood,
+                validators: [context.requiredValidator()],
               ),
               Row(
                 children: [
                   Flexible(
                     flex: 3,
                     child: AvaTextField(
-                      controller: _localidadeController,
-                      label: context.l10n.localidade,
+                      controller: _cityController,
+                      label: context.l10n.city,
+                      validators: [context.requiredValidator()],
                     ),
                   ),
                   const SizedBox(width: 8),
                   Flexible(
                     flex: 1,
                     child: AvaAutocomplete(
-                      controller: _ufController,
-                      label: context.l10n.uf,
+                      controller: _stateController,
+                      label: context.l10n.state,
                       enforceOption: Uf.values.map((it) => it.sigla),
                       suggestionBuilder: (it) => Uf.values
                           .where((e) =>
@@ -141,10 +156,6 @@ class _AddressFormState extends State<AddressForm> {
                     ),
                   ),
                 ],
-              ),
-              AvaTextField(
-                controller: _unidadeController,
-                label: context.l10n.unidade,
               ),
               const SizedBox(height: 32),
               ElevatedButton(

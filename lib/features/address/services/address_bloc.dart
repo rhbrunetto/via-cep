@@ -11,7 +11,7 @@ part 'address_bloc.freezed.dart';
 
 @freezed
 class AddressEvent with _$AddressEvent {
-  const factory AddressEvent.search(String cep) = _SearchEvent;
+  const factory AddressEvent.search(String zipCode) = _SearchEvent;
   const factory AddressEvent.initialize(AddressData? data) = _InitializeEvent;
 }
 
@@ -39,7 +39,17 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
           );
 
   void _initialize(_InitializeEvent event, Emitter emit) {
-    final data = event.data.ifNull(() => const AddressData());
+    final data = event.data.ifNull(
+      () => const AddressData(
+        zipcode: '',
+        street: '',
+        number: '',
+        additional: '',
+        neighborhood: '',
+        city: '',
+        state: '',
+      ),
+    );
 
     emit(AddressState.editing(data));
   }
@@ -47,7 +57,7 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
   Future<void> _searchCep(_SearchEvent event, Emitter emit) =>
       tryEitherAsync<AddressState?>(
         (bind) async {
-          final response = await _cepClient.searchInfoByCep(cep: event.cep);
+          final response = await _cepClient.searchInfoByCep(cep: event.zipCode);
           final viaCep = response.fold((e) => throw Exception(e), identity);
 
           return state
@@ -61,15 +71,12 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
 
 extension on AddressData {
   AddressData merge(ViaCepInfo viaCepInfo) => copyWith(
-        cep: viaCepInfo.cep ?? cep,
-        logradouro: viaCepInfo.logradouro ?? logradouro,
-        complemento: viaCepInfo.complemento ?? complemento,
-        bairro: viaCepInfo.bairro ?? bairro,
-        localidade: viaCepInfo.localidade ?? localidade,
-        uf: viaCepInfo.uf ?? uf,
-        unidade: viaCepInfo.unidade ?? unidade,
-        ibge: viaCepInfo.ibge ?? ibge,
-        gia: viaCepInfo.gia ?? gia,
+        zipcode: viaCepInfo.cep ?? zipcode,
+        street: viaCepInfo.logradouro ?? street,
+        number: viaCepInfo.complemento ?? number,
+        neighborhood: viaCepInfo.bairro ?? neighborhood,
+        city: viaCepInfo.localidade ?? city,
+        state: viaCepInfo.uf ?? state,
       );
 }
 
