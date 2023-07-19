@@ -39,7 +39,7 @@ class _AvaTextFieldState extends State<AvaTextField> {
         child: TextFormField(
           focusNode: widget.focusNode,
           controller: widget.controller,
-          autofocus: true,
+          autofocus: widget.autoFocus,
           textInputAction: TextInputAction.next,
           validator: (v) => widget.validators?.map((it) => it(v)).firstOrNull,
           onTapOutside: (_) => widget.onFocusMissed?.call(),
