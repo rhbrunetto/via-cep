@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../../../l10n/l10n.dart';
+import '../../../../ui/colors.dart';
+import '../../../../ui/textfield.dart';
 import '../../models/address.dart';
-
 
 class AddressForm extends StatefulWidget {
   const AddressForm({
@@ -20,15 +22,15 @@ class AddressForm extends StatefulWidget {
 }
 
 class _AddressFormState extends State<AddressForm> {
-  final _cepController = TextEditingController();
-  final _logradouroController = TextEditingController();
-  final _complementoController = TextEditingController();
-  final _bairroController = TextEditingController();
-  final _localidadeController = TextEditingController();
-  final _ufController = TextEditingController();
-  final _unidadeController = TextEditingController();
-  final _ibgeController = TextEditingController();
-  final _giaController = TextEditingController();
+  final _cepInput = _Input();
+  final _logradouroInput = _Input();
+  final _complementoInput = _Input();
+  final _bairroInput = _Input();
+  final _localidadeInput = _Input();
+  final _ufInput = _Input();
+  final _unidadeInput = _Input();
+  final _ibgeInput = _Input();
+  final _giaInput = _Input();
 
   @override
   void initState() {
@@ -45,67 +47,100 @@ class _AddressFormState extends State<AddressForm> {
   }
 
   void _update(AddressData data) {
-    _cepController.text = data.cep;
-    _logradouroController.text = data.logradouro;
-    _complementoController.text = data.complemento;
-    _bairroController.text = data.bairro;
-    _localidadeController.text = data.localidade;
-    _ufController.text = data.uf;
-    _unidadeController.text = data.unidade;
-    _ibgeController.text = data.ibge;
-    _giaController.text = data.gia;
+    _cepInput.controller.text = data.cep;
+    _logradouroInput.controller.text = data.logradouro;
+    _complementoInput.controller.text = data.complemento;
+    _bairroInput.controller.text = data.bairro;
+    _localidadeInput.controller.text = data.localidade;
+    _ufInput.controller.text = data.uf;
+    _unidadeInput.controller.text = data.unidade;
+    _ibgeInput.controller.text = data.ibge;
+    _giaInput.controller.text = data.gia;
+
+    _cepInput.focusNode.requestFocus();
   }
 
   void _onSubmit() => widget.onSubmit(
         AddressData(
-          cep: _cepController.text,
-          logradouro: _logradouroController.text,
-          complemento: _complementoController.text,
-          bairro: _bairroController.text,
-          localidade: _localidadeController.text,
-          uf: _ufController.text,
-          unidade: _unidadeController.text,
-          ibge: _ibgeController.text,
-          gia: _giaController.text,
+          cep: _cepInput.controller.text,
+          logradouro: _logradouroInput.controller.text,
+          complemento: _complementoInput.controller.text,
+          bairro: _bairroInput.controller.text,
+          localidade: _localidadeInput.controller.text,
+          uf: _ufInput.controller.text,
+          unidade: _unidadeInput.controller.text,
+          ibge: _ibgeInput.controller.text,
+          gia: _giaInput.controller.text,
         ),
       );
 
   @override
-  Widget build(BuildContext context) => ListView(
-        children: [
-          TextFormField(
-            controller: _cepController,
-            onChanged: widget.onCep,
-          ),
-          TextFormField(
-            controller: _logradouroController,
-          ),
-          TextFormField(
-            controller: _complementoController,
-          ),
-          TextFormField(
-            controller: _bairroController,
-          ),
-          TextFormField(
-            controller: _localidadeController,
-          ),
-          TextFormField(
-            controller: _ufController,
-          ),
-          TextFormField(
-            controller: _unidadeController,
-          ),
-          TextFormField(
-            controller: _ibgeController,
-          ),
-          TextFormField(
-            controller: _giaController,
-          ),
-          ElevatedButton(
-            onPressed: _onSubmit,
-            child: const Text('Salvar'),
-          ),
-        ],
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            AvaTextField(
+              controller: _cepInput.controller,
+              focusNode: _cepInput.focusNode,
+              label: context.l10n.cep,
+              // onChanged: widget.onCep,
+            ),
+            AvaTextField(
+              controller: _logradouroInput.controller,
+              focusNode: _logradouroInput.focusNode,
+              label: context.l10n.logradouro,
+            ),
+            AvaTextField(
+              controller: _complementoInput.controller,
+              focusNode: _complementoInput.focusNode,
+              label: context.l10n.complemento,
+            ),
+            AvaTextField(
+              controller: _bairroInput.controller,
+              focusNode: _bairroInput.focusNode,
+              label: context.l10n.bairro,
+            ),
+            AvaTextField(
+              controller: _localidadeInput.controller,
+              focusNode: _localidadeInput.focusNode,
+              label: context.l10n.localidade,
+            ),
+            AvaTextField(
+              controller: _ufInput.controller,
+              focusNode: _ufInput.focusNode,
+              label: context.l10n.uf,
+            ),
+            AvaTextField(
+              controller: _unidadeInput.controller,
+              focusNode: _unidadeInput.focusNode,
+              label: context.l10n.unidade,
+            ),
+            AvaTextField(
+              controller: _ibgeInput.controller,
+              focusNode: _ibgeInput.focusNode,
+              label: context.l10n.ibge,
+            ),
+            AvaTextField(
+              controller: _giaInput.controller,
+              focusNode: _giaInput.focusNode,
+              label: context.l10n.gia,
+            ),
+            const SizedBox(height: 32),
+            ElevatedButton(
+              onPressed: _onSubmit,
+              child: const Text('Salvar'),
+            ),
+          ],
+        ),
       );
 }
 
+class _Input {
+  const _Input._(this.controller, this.focusNode);
+
+  factory _Input() => _Input._(TextEditingController(), FocusNode());
+
+  final TextEditingController controller;
+  final FocusNode focusNode;
+}

@@ -2,28 +2,29 @@ import 'package:drift/drift.dart';
 
 import '../../../core/db/db.dart';
 import '../models/address.dart';
+import 'uf_list.dart';
 
 class AddressRows extends Table {
   const AddressRows();
 
   TextColumn get id => text()();
   DateTimeColumn get created => dateTime()();
-  TextColumn get cep => text()();
-  TextColumn get logradouro => text()();
-  TextColumn get complemento => text()();
-  TextColumn get bairro => text()();
-  TextColumn get localidade => text()();
-  TextColumn get uf => text()();
-  TextColumn get unidade => text()();
-  TextColumn get ibge => text()();
-  TextColumn get gia => text()();
+  TextColumn get cep => text().nullable()();
+  TextColumn get logradouro => text().nullable()();
+  TextColumn get complemento => text().nullable()();
+  TextColumn get bairro => text().nullable()();
+  TextColumn get localidade => text().nullable()();
+  TextColumn get uf => text().nullable()();
+  TextColumn get unidade => text().nullable()();
+  TextColumn get ibge => text().nullable()();
+  TextColumn get gia => text().nullable()();
 
   @override
   Set<Column<Object>> get primaryKey => {id};
 }
 
 extension AddressModelExt on AddressRow {
-  Address toModel() => Address(
+  Address toModel(UfList ufList) => Address(
         id: id,
         created: created,
         data: AddressData(
@@ -32,7 +33,7 @@ extension AddressModelExt on AddressRow {
           complemento: complemento,
           bairro: bairro,
           localidade: localidade,
-          uf: uf,
+          uf: ufList.findUfBySigla(uf),
           unidade: unidade,
           ibge: ibge,
           gia: gia,
@@ -49,7 +50,7 @@ extension AddressRowExt on Address {
         complemento: data.complemento,
         bairro: data.bairro,
         localidade: data.localidade,
-        uf: data.uf,
+        uf: data.uf.sigla,
         unidade: data.unidade,
         ibge: data.ibge,
         gia: data.gia,

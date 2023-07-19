@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../data/uf.dart';
+
 part 'address.freezed.dart';
 
 @freezed
@@ -14,14 +16,14 @@ class Address with _$Address {
 @freezed
 class AddressData with _$AddressData {
   const factory AddressData({
-    required String cep,
-    required String logradouro,
-    required String complemento,
-    required String bairro,
-    required String localidade,
-    required String uf,
-    required String unidade,
-    required String ibge,
-    required String gia,
+    String? cep,
+    String? logradouro,
+    String? complemento,
+    String? bairro,
+    String? localidade,
+    Uf? uf,
+    String? unidade,
+    String? ibge,
+    String? gia,
   }) = _AddressData;
 }

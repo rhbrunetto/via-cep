@@ -1,3 +1,15 @@
 {
-  "title": "Via CEP"
+  "title": "AVA Via CEP",
+  "myAddresses": "Meus Endereços",
+  "newAddress": "Novo Endereço",
+  "save": "Salvar",
+  "cep": "CEP",
+  "logradouro": "Logradouro",
+  "complemento": "Complemento",
+  "bairro": "Bairro",
+  "localidade": "Localidade",
+  "uf": "UF",
+  "unidade": "Unidade",
+  "ibge": "IBGE",
+  "gia": "GIA"
 }

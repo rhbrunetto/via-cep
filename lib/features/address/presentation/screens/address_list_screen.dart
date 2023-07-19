@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../di.dart';
+import '../../../../l10n/l10n.dart';
+import '../../../../ui/colors.dart';
 import '../../data/address_repository.dart';
 import '../../models/address.dart';
 import '../extensions.dart';
@@ -27,13 +29,11 @@ class _State extends State<AddressListScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text('Address'),
-          actions: [
-            IconButton(
-              onPressed: () => context.createAddress(),
-              icon: const Icon(Icons.add),
-            ),
-          ],
+          title: Text(context.l10n.myAddresses),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add, color: AvaColors.ghostWhite),
+          onPressed: () => context.createAddress(),
         ),
         body: StreamBuilder(
           stream: _stream,

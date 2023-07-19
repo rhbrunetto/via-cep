@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../di.dart';
+import '../../../../l10n/l10n.dart';
 import '../../models/address.dart';
 import '../../services/address_bloc.dart';
 import '../widgets/address_form.dart';
@@ -22,7 +23,9 @@ class AddressFormScreen extends StatelessWidget {
         create: (context) =>
             sl<AddressBloc>()..add(AddressEvent.initialize(data)),
         child: Scaffold(
-          appBar: AppBar(),
+          appBar: AppBar(
+            title: Text(context.l10n.newAddress),
+          ),
           body: BlocBuilder<AddressBloc, AddressState>(
             builder: (context, state) => state.map(
               none: always(Container()),

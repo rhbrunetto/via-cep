@@ -39,6 +39,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
           );
 
   Future<void> _loadAccount(Emitter emit) async {
+    await Future.delayed(const Duration(seconds: 2));
     final account = await _repository.load();
 
     final newState = account

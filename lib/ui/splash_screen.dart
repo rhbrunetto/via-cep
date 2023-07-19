@@ -9,20 +9,20 @@ class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => DecoratedBox(
-        decoration: const BoxDecoration(
-          color: AvaColors.navy,
-        ),
+  Widget build(BuildContext context) => Material(
+        color: AvaColors.platinum,
         child: Stack(
           children: [
             Align(
               alignment: Alignment.bottomCenter,
-              child: Assets.icons.flutterLogo
-                  .svg(alignment: Alignment.bottomCenter),
+              child: Assets.icons.flutterLogo.svg(alignment: Alignment.center),
             ),
             const Align(
               alignment: Alignment(0, -0.7),
-              child: Text('...'),
+              child: Text(
+                'Ava Addresses',
+                style: TextStyle(fontSize: 24),
+              ),
             ),
           ],
         ),

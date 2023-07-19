@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:search_cep/search_cep.dart';
 
-import '../data/address_repository.dart';
+import '../data/uf_list.dart';
 import '../models/address.dart';
 
 part 'address_bloc.freezed.dart';
@@ -25,12 +25,15 @@ class AddressState with _$AddressState {
 class AddressBloc extends Bloc<AddressEvent, AddressState> {
   AddressBloc({
     required ViaCepSearchCep cepClient,
+    required UfList ufList,
   })  : _cepClient = cepClient,
+        _ufList = ufList,
         super(const AddressState.none()) {
     on<AddressEvent>(_eventHandler);
   }
 
   final ViaCepSearchCep _cepClient;
+  final UfList _ufList;
 
   EventHandler<AddressEvent, AddressState> get _eventHandler =>
       (event, emit) => event.map(
@@ -39,19 +42,7 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
           );
 
   void _initialize(_InitializeEvent event, Emitter emit) {
-    final data = event.data.ifNull(
-      () => const AddressData(
-        cep: '',
-        logradouro: '',
-        complemento: '',
-        bairro: '',
-        localidade: '',
-        uf: '',
-        unidade: '',
-        ibge: '',
-        gia: '',
-      ),
-    );
+    final data = event.data.ifNull(() => const AddressData());
 
     emit(AddressState.editing(data));
   }
@@ -64,20 +55,21 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
 
           return state
               .whenOrNull(editing: identity)
-              .maybeFlatMap((it) => it.merge(viaCep).let(AddressState.editing))
+              .maybeFlatMap((it) => it.merge(viaCep, _ufList))
+              .maybeFlatMap(AddressState.editing)
               .ifNull(() => state);
         },
       ).doOnRightAsync((it) => emit(it));
 }
 
 extension on AddressData {
-  AddressData merge(ViaCepInfo viaCepInfo) => copyWith(
+  AddressData merge(ViaCepInfo viaCepInfo, UfList ufList) => copyWith(
         cep: viaCepInfo.cep ?? cep,
         logradouro: viaCepInfo.logradouro ?? logradouro,
         complemento: viaCepInfo.complemento ?? complemento,
         bairro: viaCepInfo.bairro ?? bairro,
         localidade: viaCepInfo.localidade ?? localidade,
-        uf: viaCepInfo.uf ?? uf,
+        uf: viaCepInfo.uf?.let(ufList.findUfBySigla) ?? uf,
         unidade: viaCepInfo.unidade ?? unidade,
         ibge: viaCepInfo.ibge ?? ibge,
         gia: viaCepInfo.gia ?? gia,

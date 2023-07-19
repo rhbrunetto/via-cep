@@ -16,11 +16,11 @@ class AvaThemeData {
   const AvaThemeData.dark()
       : this._(
           brightness: Brightness.light,
-          backgroundColor: AvaColors.navy,
-          primaryTextColor: AvaColors.lightSlate,
-          secondaryTextColor: AvaColors.lightestSlate,
-          dividerColor: AvaColors.lightNavy,
-          highlightColor: AvaColors.green,
+          backgroundColor: AvaColors.antiFlashWhite,
+          primaryTextColor: AvaColors.eerieBlack,
+          secondaryTextColor: AvaColors.outerSpace,
+          dividerColor: AvaColors.platinum,
+          highlightColor: AvaColors.platinum,
         );
 
   final Color backgroundColor;
@@ -37,28 +37,22 @@ class AvaThemeData {
       );
 
   ButtonStyle get _buttonStyle => ButtonStyle(
-        animationDuration: Duration.zero,
+        animationDuration: const Duration(milliseconds: 200),
         overlayColor: MaterialStateProperty.all(Colors.transparent),
-        padding: MaterialStateProperty.all(const EdgeInsets.all(8)),
-        backgroundColor: MaterialStateProperty.all(AvaColors.navy),
-        foregroundColor: MaterialStateProperty.resolveWith(
-          (states) => states.contains(MaterialState.hovered)
-              ? AvaColors.green
-              : AvaColors.lightSlate,
-        ),
-        iconColor: MaterialStateProperty.resolveWith(
-          (states) => states.contains(MaterialState.hovered)
-              ? AvaColors.green
-              : AvaColors.lightSlate,
+        backgroundColor: MaterialStateProperty.all(AvaColors.eerieBlack),
+        foregroundColor: MaterialStateProperty.all(AvaColors.platinum),
+        iconColor: MaterialStateProperty.all(AvaColors.platinum),
+        padding: MaterialStateProperty.all(
+          const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
         ),
       );
 
   ThemeData toMaterialTheme() => ThemeData(
         brightness: brightness,
         splashColor: Colors.transparent,
-        hoverColor: AvaColors.green,
         fontFamily: FontFamily.lato,
         textButtonTheme: TextButtonThemeData(style: _buttonStyle),
+        elevatedButtonTheme: ElevatedButtonThemeData(style: _buttonStyle),
         textTheme: TextTheme(
           displayLarge: _baseTextStyle.copyWith(
             fontSize: 72,
@@ -77,11 +71,11 @@ class AvaThemeData {
             fontWeight: FontWeight.w500,
           ),
           titleMedium: _baseTextStyle.copyWith(
-            fontSize: 30,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
           titleSmall: _baseTextStyle.copyWith(
-            fontSize: 20,
+            fontSize: 16,
             fontWeight: FontWeight.w500,
           ),
           bodyLarge: _baseTextStyle.copyWith(
@@ -95,8 +89,8 @@ class AvaThemeData {
         ),
         colorScheme: ColorScheme.light(
           brightness: brightness,
-          primary: AvaColors.lightSlate,
-          secondary: AvaColors.lightestSlate,
+          primary: AvaColors.eerieBlack,
+          secondary: AvaColors.outerSpace,
           background: backgroundColor,
         ),
         appBarTheme: AppBarTheme(
@@ -111,8 +105,8 @@ class AvaThemeData {
         ),
         canvasColor: backgroundColor,
         scaffoldBackgroundColor: backgroundColor,
-        highlightColor: AvaColors.green,
-        hintColor: AvaColors.green,
+        highlightColor: AvaColors.platinum,
+        hintColor: AvaColors.eerieBlack,
         dividerColor: dividerColor,
       );
 }
