@@ -40,12 +40,11 @@ class _AvaAppState extends State<AvaApp> {
         routes: (_) => [
           // TODO(rhbrunetto): fix navigation
           if (isAuthenticated)
-            const AddressRoute()
+            const AddressFlowRoute()
           else if (isLoading)
             const SplashRoute()
           else
-            // const SignInRoute(),
-            const AddressRoute()
+            const AddressFlowRoute()
         ],
       ),
       debugShowCheckedModeBanner: false,

@@ -1,12 +1,11 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:dfunc/dfunc.dart';
 import 'package:flutter/material.dart';
 
-import '../../../di.dart';
-import '../../../routes.gr.dart';
-import '../data/address_repository.dart';
-import '../models/address.dart';
-import 'extensions.dart';
+import '../../../../di.dart';
+import '../../data/address_repository.dart';
+import '../../models/address.dart';
+import '../extensions.dart';
+import '../widgets/address_card.dart';
 
 @RoutePage()
 class AddressListScreen extends StatefulWidget {
@@ -28,7 +27,7 @@ class _State extends State<AddressListScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text('Address'),
+          title: const Text('Address'),
           actions: [
             IconButton(
               onPressed: () => context.createAddress(),
@@ -45,14 +44,11 @@ class _State extends State<AddressListScreen> {
 
             return ListView.builder(
               itemCount: addresses.length,
-              itemBuilder: (context, index) {
-                final address = addresses.elementAt(index);
-
-                return ListTile(
-                  title: Text(addresses.elementAt(index).data.logradouro),
-                  onTap: () => context.editAddress(address),
-                );
-              },
+              itemBuilder: (context, index) => AddressCard(
+                address: addresses.elementAt(index),
+                onEdit: context.editAddress,
+                onDelete: context.deleteAddress,
+              ),
             );
           },
         ),

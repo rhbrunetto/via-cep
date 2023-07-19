@@ -10,11 +10,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i6;
 import 'package:ava/features/address/models/address.dart' as _i7;
-import 'package:ava/features/address/presentation/address_form_screen.dart'
-    as _i3;
-import 'package:ava/features/address/presentation/address_list_screen.dart'
+import 'package:ava/features/address/presentation/address_flow_route.dart'
     as _i5;
-import 'package:ava/features/address/presentation/address_screen.dart' as _i4;
+import 'package:ava/features/address/presentation/screens/address_form_screen.dart'
+    as _i3;
+import 'package:ava/features/address/presentation/screens/address_list_screen.dart'
+    as _i4;
 import 'package:ava/features/sign_in/sign_in.dart' as _i2;
 import 'package:ava/ui/splash_screen.dart' as _i1;
 import 'package:flutter/material.dart' as _i8;
@@ -47,16 +48,16 @@ abstract class $AppRouter extends _i6.RootStackRouter {
         ),
       );
     },
-    AddressRoute.name: (routeData) {
-      return _i6.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i4.AddressScreen(),
-      );
-    },
     AddressListRoute.name: (routeData) {
       return _i6.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i5.AddressListScreen(),
+        child: const _i4.AddressListScreen(),
+      );
+    },
+    AddressFlowRoute.name: (routeData) {
+      return _i6.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i5.AddressFlowScreen(),
       );
     },
   };
@@ -129,21 +130,7 @@ class AddressFormRouteArgs {
 }
 
 /// generated route for
-/// [_i4.AddressScreen]
-class AddressRoute extends _i6.PageRouteInfo<void> {
-  const AddressRoute({List<_i6.PageRouteInfo>? children})
-      : super(
-          AddressRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'AddressRoute';
-
-  static const _i6.PageInfo<void> page = _i6.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i5.AddressListScreen]
+/// [_i4.AddressListScreen]
 class AddressListRoute extends _i6.PageRouteInfo<void> {
   const AddressListRoute({List<_i6.PageRouteInfo>? children})
       : super(
@@ -152,6 +139,20 @@ class AddressListRoute extends _i6.PageRouteInfo<void> {
         );
 
   static const String name = 'AddressListRoute';
+
+  static const _i6.PageInfo<void> page = _i6.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i5.AddressFlowScreen]
+class AddressFlowRoute extends _i6.PageRouteInfo<void> {
+  const AddressFlowRoute({List<_i6.PageRouteInfo>? children})
+      : super(
+          AddressFlowRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AddressFlowRoute';
 
   static const _i6.PageInfo<void> page = _i6.PageInfo<void>(name);
 }

@@ -14,10 +14,10 @@ class AppRouter extends $AppRouter {
   final List<AutoRoute> routes = [
     AutoRoute(page: SplashRoute.page, initial: true),
     AutoRoute(
-      page: AddressRoute.page,
+      page: AddressFlowRoute.page,
       children: [
-        CustomRoute(page: AddressListRoute.page, initial: true),
-        CustomRoute(page: AddressFormRoute.page),
+        AutoRoute(page: AddressListRoute.page, initial: true),
+        AutoRoute(page: AddressFormRoute.page),
       ],
     ),
     AutoRoute(page: SignInRoute.page),
