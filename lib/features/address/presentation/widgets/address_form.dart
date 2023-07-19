@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../../../l10n/l10n.dart';
 import '../../../../ui/autocomplete.dart';
@@ -32,6 +33,7 @@ class _AddressFormState extends State<AddressForm> {
   final _neighborhoodController = TextEditingController();
   final _cityController = TextEditingController();
   final _stateController = TextEditingController();
+  final _zipCodeFormatter = MaskTextInputFormatter(mask: '#####-###');
 
   @override
   void initState() {
@@ -67,8 +69,8 @@ class _AddressFormState extends State<AddressForm> {
   }
 
   void _onZipCodeUpdate() {
-    final zipCode = _zipcodeController.text;
-    widget.onZipCode(zipCode);
+    final zipCode = _zipCodeFormatter.unmaskText(_zipcodeController.text);
+    if (_zipCodeFormatter.isFill()) widget.onZipCode(zipCode);
   }
 
   void _onSubmit() {
@@ -99,7 +101,11 @@ class _AddressFormState extends State<AddressForm> {
               AvaTextField(
                 controller: _zipcodeController,
                 label: context.l10n.zipcode,
+                hint: context.l10n.zipcodeHint,
                 validators: [context.requiredValidator()],
+                inputFormatters: [_zipCodeFormatter],
+                inputType: TextInputType.number,
+                autoFocus: true,
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,7 +115,9 @@ class _AddressFormState extends State<AddressForm> {
                     child: AvaTextField(
                       controller: _streetController,
                       label: context.l10n.street,
+                      hint: context.l10n.streetHint,
                       validators: [context.requiredValidator()],
+                      inputType: TextInputType.streetAddress,
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -117,7 +125,9 @@ class _AddressFormState extends State<AddressForm> {
                     flex: 1,
                     child: AvaTextField(
                       controller: _numberController,
+                      hint: context.l10n.numberHint,
                       label: context.l10n.number,
+                      inputType: TextInputType.number,
                     ),
                   ),
                 ],
@@ -125,11 +135,13 @@ class _AddressFormState extends State<AddressForm> {
               AvaTextField(
                 controller: _additionalController,
                 label: context.l10n.additional,
+                hint: context.l10n.additionalHint,
               ),
               AvaTextField(
                 controller: _neighborhoodController,
                 label: context.l10n.neighborhood,
                 validators: [context.requiredValidator()],
+                hint: context.l10n.neighborhoodHint,
               ),
               Row(
                 children: [
@@ -138,6 +150,7 @@ class _AddressFormState extends State<AddressForm> {
                     child: AvaTextField(
                       controller: _cityController,
                       label: context.l10n.city,
+                      hint: context.l10n.cityHint,
                       validators: [context.requiredValidator()],
                     ),
                   ),

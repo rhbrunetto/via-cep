@@ -41,8 +41,10 @@ class _State extends State<AddressListScreen> {
             final addresses = snapshot.data;
 
             if (addresses == null) return const SizedBox.shrink();
+            if (addresses.isEmpty) return const _EmptyListWidget();
 
             return ListView.builder(
+              padding: const EdgeInsets.all(8.0),
               itemCount: addresses.length,
               itemBuilder: (context, index) => AddressCard(
                 address: addresses.elementAt(index),
@@ -51,6 +53,28 @@ class _State extends State<AddressListScreen> {
               ),
             );
           },
+        ),
+      );
+}
+
+class _EmptyListWidget extends StatelessWidget {
+  const _EmptyListWidget();
+
+  @override
+  Widget build(BuildContext context) => Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Text.rich(
+            TextSpan(
+              text: context.l10n.emptyAddresses,
+              children: [
+                const TextSpan(text: '\n\n'),
+                TextSpan(text: context.l10n.emptyAddressCTA),
+              ],
+            ),
+            textAlign: TextAlign.center,
+            style: const TextStyle(color: AvaColors.outerSpace),
+          ),
         ),
       );
 }

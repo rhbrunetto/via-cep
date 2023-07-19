@@ -27,13 +27,16 @@ class AddressFormScreen extends StatelessWidget {
             title: Text(context.l10n.newAddress),
           ),
           body: BlocBuilder<AddressBloc, AddressState>(
-            builder: (context, state) => state.map(
-              none: always(const SizedBox.shrink()),
-              editing: (state) => AddressForm(
-                data: state.data,
-                onZipCode: (it) =>
-                    context.read<AddressBloc>().add(AddressEvent.search(it)),
-                onSubmit: (data) => context.router.pop(data),
+            builder: (context, state) => AnimatedSwitcher(
+              duration: const Duration(milliseconds: 200),
+              child: state.map(
+                none: always(const SizedBox.shrink()),
+                editing: (state) => AddressForm(
+                  data: state.data,
+                  onZipCode: (it) =>
+                      context.read<AddressBloc>().add(AddressEvent.search(it)),
+                  onSubmit: (data) => context.router.pop(data),
+                ),
               ),
             ),
           ),

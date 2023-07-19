@@ -1,8 +1,12 @@
 {
   "title": "AVA Via CEP",
+  "emptyAddresses": "Você ainda não cadastrou nenhum endereço",
+  "emptyAddressCTA": "Adicione endereços no botão abaixo!",
   "myAddresses": "Meus Endereços",
   "newAddress": "Novo Endereço",
   "save": "Salvar",
+  "deleteAddress": "Apagar endereço",
+  "editAddress": "Editar endereço",
   "validatorRequired": "Campo obrigatório",
   "validatorInvalid": "Inválido",
   "validatorMinChar": "Mínimo {length} caracteres",
@@ -14,10 +18,16 @@
     }
   },
   "zipcode": "CEP",
+  "zipcodeHint": "00000-000",
   "street": "Logradouro",
+  "streetHint": "Av. Brasil",
   "number": "N\u00BA",
+  "numberHint": "75",
   "additional": "Complemento",
+  "additionalHint": "Apto 21",
   "neighborhood": "Bairro",
+  "neighborhoodHint": "Centro",
   "city": "Cidade",
+  "cityHint": "São Paulo",
   "state": "UF"
 }
