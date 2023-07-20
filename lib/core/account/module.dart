@@ -15,3 +15,7 @@ class AccountModule extends SingleChildStatelessWidget {
         child: child,
       );
 }
+
+extension AccountModuleExt on BuildContext {
+  void refreshAccount() => read<AccountBloc>()..add(const AccountEvent.load());
+}

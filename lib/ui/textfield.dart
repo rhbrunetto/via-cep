@@ -41,7 +41,8 @@ class _AvaTextFieldState extends State<AvaTextField> {
           controller: widget.controller,
           autofocus: widget.autoFocus,
           textInputAction: TextInputAction.next,
-          validator: (v) => widget.validators?.map((it) => it(v)).firstOrNull,
+          validator: (v) =>
+              widget.validators?.map((it) => it(v)).whereNotNull().firstOrNull,
           onTapOutside: (_) => widget.onFocusMissed?.call(),
           onFieldSubmitted: (_) => widget.onFocusMissed?.call(),
           onEditingComplete: widget.onFocusMissed,

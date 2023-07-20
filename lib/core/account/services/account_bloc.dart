@@ -11,7 +11,6 @@ part 'account_bloc.freezed.dart';
 @freezed
 sealed class AccountEvent with _$AccountEvent {
   const factory AccountEvent.load() = _LoadEvent;
-  const factory AccountEvent.register(AccountData accountData) = _RegisterEvent;
 }
 
 @freezed
@@ -35,7 +34,6 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   EventHandler<AccountEvent, AccountState> get _eventHandler =>
       (event, emit) => event.map(
             load: (_) => _loadAccount(emit),
-            register: (event) => ignore,
           );
 
   Future<void> _loadAccount(Emitter emit) async {

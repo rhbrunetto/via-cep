@@ -3,12 +3,16 @@
 part of 'db.dart';
 
 // ignore_for_file: type=lint
-class $AccountRowsTable extends AccountRows
-    with TableInfo<$AccountRowsTable, AccountRow> {
+class $UserRowsTable extends UserRows with TableInfo<$UserRowsTable, UserRow> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $AccountRowsTable(this.attachedDatabase, [this._alias]);
+  $UserRowsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
@@ -18,18 +22,31 @@ class $AccountRowsTable extends AccountRows
   @override
   late final GeneratedColumn<String> email = GeneratedColumn<String>(
       'email', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'));
+  static const VerificationMeta _passwordMeta =
+      const VerificationMeta('password');
+  @override
+  late final GeneratedColumn<String> password = GeneratedColumn<String>(
+      'password', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   @override
-  List<GeneratedColumn> get $columns => [name, email];
+  List<GeneratedColumn> get $columns => [id, name, email, password];
   @override
-  String get aliasedName => _alias ?? 'account_rows';
+  String get aliasedName => _alias ?? 'user_rows';
   @override
-  String get actualTableName => 'account_rows';
+  String get actualTableName => 'user_rows';
   @override
-  VerificationContext validateIntegrity(Insertable<AccountRow> instance,
+  VerificationContext validateIntegrity(Insertable<UserRow> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
     if (data.containsKey('name')) {
       context.handle(
           _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
@@ -42,119 +59,169 @@ class $AccountRowsTable extends AccountRows
     } else if (isInserting) {
       context.missing(_emailMeta);
     }
+    if (data.containsKey('password')) {
+      context.handle(_passwordMeta,
+          password.isAcceptableOrUnknown(data['password']!, _passwordMeta));
+    } else if (isInserting) {
+      context.missing(_passwordMeta);
+    }
     return context;
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => const {};
+  Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  AccountRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+  UserRow map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return AccountRow(
+    return UserRow(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
       name: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
       email: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}email'])!,
+      password: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}password'])!,
     );
   }
 
   @override
-  $AccountRowsTable createAlias(String alias) {
-    return $AccountRowsTable(attachedDatabase, alias);
+  $UserRowsTable createAlias(String alias) {
+    return $UserRowsTable(attachedDatabase, alias);
   }
 }
 
-class AccountRow extends DataClass implements Insertable<AccountRow> {
+class UserRow extends DataClass implements Insertable<UserRow> {
+  final String id;
   final String name;
   final String email;
-  const AccountRow({required this.name, required this.email});
+  final String password;
+  const UserRow(
+      {required this.id,
+      required this.name,
+      required this.email,
+      required this.password});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
     map['name'] = Variable<String>(name);
     map['email'] = Variable<String>(email);
+    map['password'] = Variable<String>(password);
     return map;
   }
 
-  AccountRowsCompanion toCompanion(bool nullToAbsent) {
-    return AccountRowsCompanion(
+  UserRowsCompanion toCompanion(bool nullToAbsent) {
+    return UserRowsCompanion(
+      id: Value(id),
       name: Value(name),
       email: Value(email),
+      password: Value(password),
     );
   }
 
-  factory AccountRow.fromJson(Map<String, dynamic> json,
+  factory UserRow.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return AccountRow(
+    return UserRow(
+      id: serializer.fromJson<String>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       email: serializer.fromJson<String>(json['email']),
+      password: serializer.fromJson<String>(json['password']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
       'name': serializer.toJson<String>(name),
       'email': serializer.toJson<String>(email),
+      'password': serializer.toJson<String>(password),
     };
   }
 
-  AccountRow copyWith({String? name, String? email}) => AccountRow(
+  UserRow copyWith(
+          {String? id, String? name, String? email, String? password}) =>
+      UserRow(
+        id: id ?? this.id,
         name: name ?? this.name,
         email: email ?? this.email,
+        password: password ?? this.password,
       );
   @override
   String toString() {
-    return (StringBuffer('AccountRow(')
+    return (StringBuffer('UserRow(')
+          ..write('id: $id, ')
           ..write('name: $name, ')
-          ..write('email: $email')
+          ..write('email: $email, ')
+          ..write('password: $password')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(name, email);
+  int get hashCode => Object.hash(id, name, email, password);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is AccountRow &&
+      (other is UserRow &&
+          other.id == this.id &&
           other.name == this.name &&
-          other.email == this.email);
+          other.email == this.email &&
+          other.password == this.password);
 }
 
-class AccountRowsCompanion extends UpdateCompanion<AccountRow> {
+class UserRowsCompanion extends UpdateCompanion<UserRow> {
+  final Value<String> id;
   final Value<String> name;
   final Value<String> email;
+  final Value<String> password;
   final Value<int> rowid;
-  const AccountRowsCompanion({
+  const UserRowsCompanion({
+    this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.email = const Value.absent(),
+    this.password = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  AccountRowsCompanion.insert({
+  UserRowsCompanion.insert({
+    required String id,
     required String name,
     required String email,
+    required String password,
     this.rowid = const Value.absent(),
-  })  : name = Value(name),
-        email = Value(email);
-  static Insertable<AccountRow> custom({
+  })  : id = Value(id),
+        name = Value(name),
+        email = Value(email),
+        password = Value(password);
+  static Insertable<UserRow> custom({
+    Expression<String>? id,
     Expression<String>? name,
     Expression<String>? email,
+    Expression<String>? password,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
+      if (id != null) 'id': id,
       if (name != null) 'name': name,
       if (email != null) 'email': email,
+      if (password != null) 'password': password,
       if (rowid != null) 'rowid': rowid,
     });
   }
 
-  AccountRowsCompanion copyWith(
-      {Value<String>? name, Value<String>? email, Value<int>? rowid}) {
-    return AccountRowsCompanion(
+  UserRowsCompanion copyWith(
+      {Value<String>? id,
+      Value<String>? name,
+      Value<String>? email,
+      Value<String>? password,
+      Value<int>? rowid}) {
+    return UserRowsCompanion(
+      id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
+      password: password ?? this.password,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -162,11 +229,17 @@ class AccountRowsCompanion extends UpdateCompanion<AccountRow> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
     if (name.present) {
       map['name'] = Variable<String>(name.value);
     }
     if (email.present) {
       map['email'] = Variable<String>(email.value);
+    }
+    if (password.present) {
+      map['password'] = Variable<String>(password.value);
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -176,9 +249,11 @@ class AccountRowsCompanion extends UpdateCompanion<AccountRow> {
 
   @override
   String toString() {
-    return (StringBuffer('AccountRowsCompanion(')
+    return (StringBuffer('UserRowsCompanion(')
+          ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('email: $email, ')
+          ..write('password: $password, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -240,6 +315,14 @@ class $AddressRowsTable extends AddressRows
   late final GeneratedColumn<String> state = GeneratedColumn<String>(
       'state', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+      'user_id', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES user_rows (id)'));
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -250,7 +333,8 @@ class $AddressRowsTable extends AddressRows
         number,
         neighborhood,
         city,
-        state
+        state,
+        userId
       ];
   @override
   String get aliasedName => _alias ?? 'address_rows';
@@ -314,6 +398,12 @@ class $AddressRowsTable extends AddressRows
     } else if (isInserting) {
       context.missing(_stateMeta);
     }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
     return context;
   }
 
@@ -341,6 +431,8 @@ class $AddressRowsTable extends AddressRows
           .read(DriftSqlType.string, data['${effectivePrefix}city'])!,
       state: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}state'])!,
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}user_id'])!,
     );
   }
 
@@ -360,6 +452,7 @@ class AddressRow extends DataClass implements Insertable<AddressRow> {
   final String neighborhood;
   final String city;
   final String state;
+  final String userId;
   const AddressRow(
       {required this.id,
       required this.created,
@@ -369,7 +462,8 @@ class AddressRow extends DataClass implements Insertable<AddressRow> {
       this.number,
       required this.neighborhood,
       required this.city,
-      required this.state});
+      required this.state,
+      required this.userId});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -386,6 +480,7 @@ class AddressRow extends DataClass implements Insertable<AddressRow> {
     map['neighborhood'] = Variable<String>(neighborhood);
     map['city'] = Variable<String>(city);
     map['state'] = Variable<String>(state);
+    map['user_id'] = Variable<String>(userId);
     return map;
   }
 
@@ -403,6 +498,7 @@ class AddressRow extends DataClass implements Insertable<AddressRow> {
       neighborhood: Value(neighborhood),
       city: Value(city),
       state: Value(state),
+      userId: Value(userId),
     );
   }
 
@@ -419,6 +515,7 @@ class AddressRow extends DataClass implements Insertable<AddressRow> {
       neighborhood: serializer.fromJson<String>(json['neighborhood']),
       city: serializer.fromJson<String>(json['city']),
       state: serializer.fromJson<String>(json['state']),
+      userId: serializer.fromJson<String>(json['userId']),
     );
   }
   @override
@@ -434,6 +531,7 @@ class AddressRow extends DataClass implements Insertable<AddressRow> {
       'neighborhood': serializer.toJson<String>(neighborhood),
       'city': serializer.toJson<String>(city),
       'state': serializer.toJson<String>(state),
+      'userId': serializer.toJson<String>(userId),
     };
   }
 
@@ -446,7 +544,8 @@ class AddressRow extends DataClass implements Insertable<AddressRow> {
           Value<String?> number = const Value.absent(),
           String? neighborhood,
           String? city,
-          String? state}) =>
+          String? state,
+          String? userId}) =>
       AddressRow(
         id: id ?? this.id,
         created: created ?? this.created,
@@ -457,6 +556,7 @@ class AddressRow extends DataClass implements Insertable<AddressRow> {
         neighborhood: neighborhood ?? this.neighborhood,
         city: city ?? this.city,
         state: state ?? this.state,
+        userId: userId ?? this.userId,
       );
   @override
   String toString() {
@@ -469,14 +569,15 @@ class AddressRow extends DataClass implements Insertable<AddressRow> {
           ..write('number: $number, ')
           ..write('neighborhood: $neighborhood, ')
           ..write('city: $city, ')
-          ..write('state: $state')
+          ..write('state: $state, ')
+          ..write('userId: $userId')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => Object.hash(id, created, zipcode, street, additional,
-      number, neighborhood, city, state);
+      number, neighborhood, city, state, userId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -489,7 +590,8 @@ class AddressRow extends DataClass implements Insertable<AddressRow> {
           other.number == this.number &&
           other.neighborhood == this.neighborhood &&
           other.city == this.city &&
-          other.state == this.state);
+          other.state == this.state &&
+          other.userId == this.userId);
 }
 
 class AddressRowsCompanion extends UpdateCompanion<AddressRow> {
@@ -502,6 +604,7 @@ class AddressRowsCompanion extends UpdateCompanion<AddressRow> {
   final Value<String> neighborhood;
   final Value<String> city;
   final Value<String> state;
+  final Value<String> userId;
   final Value<int> rowid;
   const AddressRowsCompanion({
     this.id = const Value.absent(),
@@ -513,6 +616,7 @@ class AddressRowsCompanion extends UpdateCompanion<AddressRow> {
     this.neighborhood = const Value.absent(),
     this.city = const Value.absent(),
     this.state = const Value.absent(),
+    this.userId = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   AddressRowsCompanion.insert({
@@ -525,6 +629,7 @@ class AddressRowsCompanion extends UpdateCompanion<AddressRow> {
     required String neighborhood,
     required String city,
     required String state,
+    required String userId,
     this.rowid = const Value.absent(),
   })  : id = Value(id),
         created = Value(created),
@@ -532,7 +637,8 @@ class AddressRowsCompanion extends UpdateCompanion<AddressRow> {
         street = Value(street),
         neighborhood = Value(neighborhood),
         city = Value(city),
-        state = Value(state);
+        state = Value(state),
+        userId = Value(userId);
   static Insertable<AddressRow> custom({
     Expression<String>? id,
     Expression<DateTime>? created,
@@ -543,6 +649,7 @@ class AddressRowsCompanion extends UpdateCompanion<AddressRow> {
     Expression<String>? neighborhood,
     Expression<String>? city,
     Expression<String>? state,
+    Expression<String>? userId,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -555,6 +662,7 @@ class AddressRowsCompanion extends UpdateCompanion<AddressRow> {
       if (neighborhood != null) 'neighborhood': neighborhood,
       if (city != null) 'city': city,
       if (state != null) 'state': state,
+      if (userId != null) 'user_id': userId,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -569,6 +677,7 @@ class AddressRowsCompanion extends UpdateCompanion<AddressRow> {
       Value<String>? neighborhood,
       Value<String>? city,
       Value<String>? state,
+      Value<String>? userId,
       Value<int>? rowid}) {
     return AddressRowsCompanion(
       id: id ?? this.id,
@@ -580,6 +689,7 @@ class AddressRowsCompanion extends UpdateCompanion<AddressRow> {
       neighborhood: neighborhood ?? this.neighborhood,
       city: city ?? this.city,
       state: state ?? this.state,
+      userId: userId ?? this.userId,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -614,6 +724,9 @@ class AddressRowsCompanion extends UpdateCompanion<AddressRow> {
     if (state.present) {
       map['state'] = Variable<String>(state.value);
     }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -632,6 +745,7 @@ class AddressRowsCompanion extends UpdateCompanion<AddressRow> {
           ..write('neighborhood: $neighborhood, ')
           ..write('city: $city, ')
           ..write('state: $state, ')
+          ..write('userId: $userId, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -640,12 +754,11 @@ class AddressRowsCompanion extends UpdateCompanion<AddressRow> {
 
 abstract class _$AvaDatabase extends GeneratedDatabase {
   _$AvaDatabase(QueryExecutor e) : super(e);
-  late final $AccountRowsTable accountRows = $AccountRowsTable(this);
+  late final $UserRowsTable userRows = $UserRowsTable(this);
   late final $AddressRowsTable addressRows = $AddressRowsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [accountRows, addressRows];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [userRows, addressRows];
 }

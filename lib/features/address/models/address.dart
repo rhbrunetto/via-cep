@@ -6,6 +6,7 @@ part 'address.freezed.dart';
 class Address with _$Address {
   const factory Address({
     required String id,
+    required String userId,
     required DateTime created,
     required AddressData data,
   }) = _Address;

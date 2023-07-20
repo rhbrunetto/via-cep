@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AccountData {
+  String get userId => throw _privateConstructorUsedError;
   String get userName => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
 
@@ -30,7 +31,7 @@ abstract class $AccountDataCopyWith<$Res> {
           AccountData value, $Res Function(AccountData) then) =
       _$AccountDataCopyWithImpl<$Res, AccountData>;
   @useResult
-  $Res call({String userName, String email});
+  $Res call({String userId, String userName, String email});
 }
 
 /// @nodoc
@@ -46,10 +47,15 @@ class _$AccountDataCopyWithImpl<$Res, $Val extends AccountData>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? userId = null,
     Object? userName = null,
     Object? email = null,
   }) {
     return _then(_value.copyWith(
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
       userName: null == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
@@ -70,7 +76,7 @@ abstract class _$$_AccountDataCopyWith<$Res>
       __$$_AccountDataCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String userName, String email});
+  $Res call({String userId, String userName, String email});
 }
 
 /// @nodoc
@@ -84,10 +90,15 @@ class __$$_AccountDataCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? userId = null,
     Object? userName = null,
     Object? email = null,
   }) {
     return _then(_$_AccountData(
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
       userName: null == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
@@ -103,8 +114,11 @@ class __$$_AccountDataCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_AccountData implements _AccountData {
-  const _$_AccountData({required this.userName, required this.email});
+  const _$_AccountData(
+      {required this.userId, required this.userName, required this.email});
 
+  @override
+  final String userId;
   @override
   final String userName;
   @override
@@ -112,7 +126,7 @@ class _$_AccountData implements _AccountData {
 
   @override
   String toString() {
-    return 'AccountData(userName: $userName, email: $email)';
+    return 'AccountData(userId: $userId, userName: $userName, email: $email)';
   }
 
   @override
@@ -120,13 +134,14 @@ class _$_AccountData implements _AccountData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AccountData &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
             (identical(other.email, email) || other.email == email));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userName, email);
+  int get hashCode => Object.hash(runtimeType, userId, userName, email);
 
   @JsonKey(ignore: true)
   @override
@@ -137,9 +152,12 @@ class _$_AccountData implements _AccountData {
 
 abstract class _AccountData implements AccountData {
   const factory _AccountData(
-      {required final String userName,
+      {required final String userId,
+      required final String userName,
       required final String email}) = _$_AccountData;
 
+  @override
+  String get userId;
   @override
   String get userName;
   @override

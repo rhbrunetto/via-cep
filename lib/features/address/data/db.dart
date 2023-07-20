@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 
 import '../../../core/db/db.dart';
+import '../../../core/users/data/db.dart';
 import '../models/address.dart';
 
 class AddressRows extends Table {
@@ -15,6 +16,7 @@ class AddressRows extends Table {
   TextColumn get neighborhood => text()();
   TextColumn get city => text()();
   TextColumn get state => text()();
+  TextColumn get userId => text().references(UserRows, #id)();
 
   @override
   Set<Column<Object>> get primaryKey => {id};
@@ -23,6 +25,7 @@ class AddressRows extends Table {
 extension AddressModelExt on AddressRow {
   Address toModel() => Address(
         id: id,
+        userId: userId,
         created: created,
         data: AddressData(
           zipcode: zipcode,
@@ -39,6 +42,7 @@ extension AddressModelExt on AddressRow {
 extension AddressRowExt on Address {
   AddressRow toDto() => AddressRow(
         id: id,
+        userId: userId,
         created: created,
         zipcode: data.zipcode,
         street: data.street,

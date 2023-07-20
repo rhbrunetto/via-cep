@@ -20,6 +20,11 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: AddressFormRoute.page),
       ],
     ),
-    AutoRoute(page: SignInRoute.page),
+    AutoRoute(
+      page: SignInFlowRoute.page,
+      children: [
+        AutoRoute(page: SignInRoute.page, initial: true),
+      ],
+    ),
   ];
 }

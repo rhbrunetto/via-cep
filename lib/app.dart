@@ -38,18 +38,16 @@ class _AvaAppState extends State<AvaApp> {
       routerDelegate: AutoRouterDelegate.declarative(
         _router,
         routes: (_) => [
-          // TODO(rhbrunetto): fix navigation
           if (isAuthenticated)
             const AddressFlowRoute()
           else if (isLoading)
             const SplashRoute()
           else
-            const AddressFlowRoute()
+            const SignInFlowRoute()
         ],
       ),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
-      // TODO(rhbrunetto): fix locales (en, br)
       supportedLocales: AppLocalizations.supportedLocales,
       theme: const AvaThemeData.dark().toMaterialTheme(),
       title: 'AVA Via Cep',

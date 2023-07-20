@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../features/address/data/db.dart';
-import '../account/data/db.dart';
+import '../users/data/db.dart';
 import 'open_connection.dart';
 
 part 'db.g.dart';
@@ -12,7 +12,7 @@ part 'db.g.dart';
 const int latestVersion = 1;
 
 const _tables = [
-  AccountRows,
+  UserRows,
   AddressRows,
 ];
 
@@ -32,7 +32,7 @@ class AvaDatabase extends _$AvaDatabase {
         onCreate: (Migrator m) => m.createAll(),
         onUpgrade: (Migrator m, int from, int to) async {
           if (from < 1) {
-            await m.createTable(accountRows);
+            await m.createTable(userRows);
             await m.createTable(addressRows);
           }
         },

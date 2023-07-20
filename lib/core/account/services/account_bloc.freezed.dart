@@ -19,38 +19,32 @@ mixin _$AccountEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() load,
-    required TResult Function(AccountData accountData) register,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? load,
-    TResult? Function(AccountData accountData)? register,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? load,
-    TResult Function(AccountData accountData)? register,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_LoadEvent value) load,
-    required TResult Function(_RegisterEvent value) register,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoadEvent value)? load,
-    TResult? Function(_RegisterEvent value)? register,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoadEvent value)? load,
-    TResult Function(_RegisterEvent value)? register,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -113,7 +107,6 @@ class _$_LoadEvent implements _LoadEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() load,
-    required TResult Function(AccountData accountData) register,
   }) {
     return load();
   }
@@ -122,7 +115,6 @@ class _$_LoadEvent implements _LoadEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? load,
-    TResult? Function(AccountData accountData)? register,
   }) {
     return load?.call();
   }
@@ -131,7 +123,6 @@ class _$_LoadEvent implements _LoadEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? load,
-    TResult Function(AccountData accountData)? register,
     required TResult orElse(),
   }) {
     if (load != null) {
@@ -144,7 +135,6 @@ class _$_LoadEvent implements _LoadEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_LoadEvent value) load,
-    required TResult Function(_RegisterEvent value) register,
   }) {
     return load(this);
   }
@@ -153,7 +143,6 @@ class _$_LoadEvent implements _LoadEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoadEvent value)? load,
-    TResult? Function(_RegisterEvent value)? register,
   }) {
     return load?.call(this);
   }
@@ -162,7 +151,6 @@ class _$_LoadEvent implements _LoadEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoadEvent value)? load,
-    TResult Function(_RegisterEvent value)? register,
     required TResult orElse(),
   }) {
     if (load != null) {
@@ -174,151 +162,6 @@ class _$_LoadEvent implements _LoadEvent {
 
 abstract class _LoadEvent implements AccountEvent {
   const factory _LoadEvent() = _$_LoadEvent;
-}
-
-/// @nodoc
-abstract class _$$_RegisterEventCopyWith<$Res> {
-  factory _$$_RegisterEventCopyWith(
-          _$_RegisterEvent value, $Res Function(_$_RegisterEvent) then) =
-      __$$_RegisterEventCopyWithImpl<$Res>;
-  @useResult
-  $Res call({AccountData accountData});
-
-  $AccountDataCopyWith<$Res> get accountData;
-}
-
-/// @nodoc
-class __$$_RegisterEventCopyWithImpl<$Res>
-    extends _$AccountEventCopyWithImpl<$Res, _$_RegisterEvent>
-    implements _$$_RegisterEventCopyWith<$Res> {
-  __$$_RegisterEventCopyWithImpl(
-      _$_RegisterEvent _value, $Res Function(_$_RegisterEvent) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? accountData = null,
-  }) {
-    return _then(_$_RegisterEvent(
-      null == accountData
-          ? _value.accountData
-          : accountData // ignore: cast_nullable_to_non_nullable
-              as AccountData,
-    ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AccountDataCopyWith<$Res> get accountData {
-    return $AccountDataCopyWith<$Res>(_value.accountData, (value) {
-      return _then(_value.copyWith(accountData: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$_RegisterEvent implements _RegisterEvent {
-  const _$_RegisterEvent(this.accountData);
-
-  @override
-  final AccountData accountData;
-
-  @override
-  String toString() {
-    return 'AccountEvent.register(accountData: $accountData)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_RegisterEvent &&
-            (identical(other.accountData, accountData) ||
-                other.accountData == accountData));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, accountData);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_RegisterEventCopyWith<_$_RegisterEvent> get copyWith =>
-      __$$_RegisterEventCopyWithImpl<_$_RegisterEvent>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() load,
-    required TResult Function(AccountData accountData) register,
-  }) {
-    return register(accountData);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? load,
-    TResult? Function(AccountData accountData)? register,
-  }) {
-    return register?.call(accountData);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? load,
-    TResult Function(AccountData accountData)? register,
-    required TResult orElse(),
-  }) {
-    if (register != null) {
-      return register(accountData);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_LoadEvent value) load,
-    required TResult Function(_RegisterEvent value) register,
-  }) {
-    return register(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_LoadEvent value)? load,
-    TResult? Function(_RegisterEvent value)? register,
-  }) {
-    return register?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_LoadEvent value)? load,
-    TResult Function(_RegisterEvent value)? register,
-    required TResult orElse(),
-  }) {
-    if (register != null) {
-      return register(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _RegisterEvent implements AccountEvent {
-  const factory _RegisterEvent(final AccountData accountData) =
-      _$_RegisterEvent;
-
-  AccountData get accountData;
-  @JsonKey(ignore: true)
-  _$$_RegisterEventCopyWith<_$_RegisterEvent> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
