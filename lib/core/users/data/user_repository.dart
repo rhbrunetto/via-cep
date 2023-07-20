@@ -26,6 +26,14 @@ class UserRepository {
       password: _hasher.hash(user.password),
     );
 
+    await _db.into(_db.userRows).insert(updated.toDto());
+  }
+
+  Future<void> edit(User user) async {
+    final updated = user.copyWith(
+      password: _hasher.hash(user.password),
+    );
+
     await _db.into(_db.userRows).insertOnConflictUpdate(updated.toDto());
   }
 }

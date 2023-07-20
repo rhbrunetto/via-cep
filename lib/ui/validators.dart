@@ -22,6 +22,17 @@ extension ValidatorExt on BuildContext {
 
         return l10n.validatorEmail;
       };
+
+  Validator matchValidator(String other) => (it) {
+        print(it);
+        print(other);
+        return it == other ? null : l10n.passwordMismatch;
+      };
+
+  Validator countValidator(int count) =>
+      (it) => it == null || it.split(' ').length >= count
+          ? null
+          : l10n.validatorFullName;
 }
 
 final _emailRegExp = RegExp(

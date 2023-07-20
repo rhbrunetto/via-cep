@@ -16,18 +16,26 @@ class AccountRepository {
     final userId = await _storage.read(key: _key);
     if (userId == null) return null;
 
-    final query = _db.select(_db.userRows)
-      ..where((tbl) => tbl.id.equals(userId));
-
-    return query.getSingleOrNull().then((row) => row?.toAccount());
+    return _select(userId).then((it) => it?.toAccount());
   }
 
-  Future<void> setAccount(String userId) async {
+  Future<bool> setAccount(String userId) async {
+    final exists = await _select(userId) != null;
+    if (!exists) return false;
+
     await _storage.write(key: _key, value: userId);
+    return true;
   }
 
   Future<void> clear() async {
     await _storage.deleteAll();
+  }
+
+  Future<UserRow?> _select(String userId) async {
+    final query = _db.select(_db.userRows)
+      ..where((tbl) => tbl.id.equals(userId));
+
+    return query.getSingleOrNull();
   }
 }
 

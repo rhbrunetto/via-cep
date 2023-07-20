@@ -3,32 +3,42 @@ import '../../../../l10n/l10n.dart';
 import '../../../../ui/textfield.dart';
 import '../../../../ui/validators.dart';
 
-typedef SignInFormCallback = void Function(String email, String password);
+typedef UserCallback = void Function(
+  String name,
+  String email,
+  String password,
+);
 
-class SignInForm extends StatefulWidget {
-  const SignInForm({
+class UserForm extends StatefulWidget {
+  const UserForm({
     super.key,
     required this.loading,
     required this.onSubmit,
   });
 
   final bool loading;
-  final SignInFormCallback onSubmit;
+  final UserCallback onSubmit;
 
   @override
-  State<SignInForm> createState() => _SignInFormState();
+  State<UserForm> createState() => _UserFormState();
 }
 
-class _SignInFormState extends State<SignInForm> {
+class _UserFormState extends State<UserForm> {
   final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _passwordMatchController = TextEditingController();
 
   void _onSubmit() {
     final valid = _formKey.currentState?.validate() ?? false;
     if (!valid) return;
 
-    widget.onSubmit(_emailController.text, _passwordController.text);
+    widget.onSubmit(
+      _nameController.text,
+      _emailController.text,
+      _passwordController.text,
+    );
   }
 
   @override
@@ -39,6 +49,15 @@ class _SignInFormState extends State<SignInForm> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            AvaTextField(
+              controller: _nameController,
+              label: context.l10n.name,
+              hint: context.l10n.nameHint,
+              validators: [
+                context.requiredValidator(),
+                context.countValidator(2),
+              ],
+            ),
             AvaTextField(
               controller: _emailController,
               label: context.l10n.email,
@@ -51,10 +70,19 @@ class _SignInFormState extends State<SignInForm> {
             AvaTextField(
               controller: _passwordController,
               label: context.l10n.password,
-              isPassword: true,
               validators: [
                 context.requiredValidator(),
                 context.minCharValidator(8),
+                context.matchValidator(_passwordMatchController.text),
+              ],
+            ),
+            AvaTextField(
+              controller: _passwordMatchController,
+              label: context.l10n.passwordRepeat,
+              validators: [
+                context.requiredValidator(),
+                context.minCharValidator(8),
+                context.matchValidator(_passwordController.text),
               ],
             ),
             const SizedBox(height: 48),
@@ -64,7 +92,7 @@ class _SignInFormState extends State<SignInForm> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: _onSubmit,
-                      child: Text(context.l10n.signIn),
+                      child: Text(context.l10n.save),
                     ),
                   ),
           ],

@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../core/account/data/account_repository.dart';
 import '../../../core/users/data/user_repository.dart';
 
 part 'sign_in_bloc.freezed.dart';
@@ -18,22 +17,19 @@ sealed class SignInState with _$SignInState {
   const factory SignInState.none() = _None;
   const factory SignInState.loading() = _Loading;
   const factory SignInState.failed() = _Failed;
-  const factory SignInState.success() = _Success;
+  const factory SignInState.success(String userId) = _Success;
 }
 
 @injectable
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
   SignInBloc({
     required UserRepository userRepository,
-    required AccountRepository accountRepository,
   })  : _userRepository = userRepository,
-        _accountRepository = accountRepository,
         super(const SignInState.none()) {
     on<SignInEvent>(_eventHandler);
   }
 
   final UserRepository _userRepository;
-  final AccountRepository _accountRepository;
 
   EventHandler<SignInEvent, SignInState> get _eventHandler =>
       (event, emit) => event.map(
@@ -50,8 +46,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     if (match == null) {
       emit(const SignInState.failed());
     } else {
-      await _accountRepository.setAccount(match.id);
-      emit(const SignInState.success());
+      emit(SignInState.success(match.id));
     }
   }
 }

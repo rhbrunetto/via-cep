@@ -11,6 +11,7 @@ class AvaTextField extends StatefulWidget {
     required this.label,
     this.inputType = TextInputType.text,
     this.autoFocus = false,
+    this.isPassword = false,
     this.hint,
     this.inputFormatters,
     this.focusNode,
@@ -27,12 +28,23 @@ class AvaTextField extends StatefulWidget {
   final List<Validator>? validators;
   final VoidCallback? onFocusMissed;
   final bool autoFocus;
+  final bool isPassword;
 
   @override
   State<AvaTextField> createState() => _AvaTextFieldState();
 }
 
 class _AvaTextFieldState extends State<AvaTextField> {
+  late bool _obscure;
+
+  @override
+  void initState() {
+    super.initState();
+    _obscure = widget.isPassword;
+  }
+
+  void _toggleObscure() => setState(() => _obscure = !_obscure);
+
   @override
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -40,6 +52,7 @@ class _AvaTextFieldState extends State<AvaTextField> {
           focusNode: widget.focusNode,
           controller: widget.controller,
           autofocus: widget.autoFocus,
+          obscureText: _obscure,
           textInputAction: TextInputAction.next,
           validator: (v) =>
               widget.validators?.map((it) => it(v)).whereNotNull().firstOrNull,
@@ -47,7 +60,9 @@ class _AvaTextFieldState extends State<AvaTextField> {
           onFieldSubmitted: (_) => widget.onFocusMissed?.call(),
           onEditingComplete: widget.onFocusMissed,
           inputFormatters: widget.inputFormatters,
-          keyboardType: widget.inputType,
+          keyboardType: widget.isPassword
+              ? TextInputType.visiblePassword
+              : widget.inputType,
           decoration: InputDecoration(
             labelText: widget.label,
             labelStyle: const TextStyle(
@@ -60,6 +75,14 @@ class _AvaTextFieldState extends State<AvaTextField> {
               fontWeight: FontWeight.w300,
             ),
             border: const OutlineInputBorder(),
+            suffixIcon: widget.isPassword
+                ? IconButton(
+                    onPressed: _toggleObscure,
+                    icon: _obscure
+                        ? const Icon(Icons.remove_red_eye)
+                        : const Icon(Icons.lock),
+                  )
+                : null,
           ),
         ),
       );
