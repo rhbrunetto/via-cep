@@ -67,23 +67,29 @@ class _UserFormState extends State<UserForm> {
                 context.emailValidator(),
               ],
             ),
-            AvaTextField(
-              controller: _passwordController,
-              label: context.l10n.password,
-              validators: [
-                context.requiredValidator(),
-                context.minCharValidator(8),
-                context.matchValidator(_passwordMatchController.text),
-              ],
+            ValueListenableBuilder(
+              valueListenable: _passwordController,
+              builder: (context, value, _) => AvaTextField(
+                controller: _passwordController,
+                label: context.l10n.password,
+                validators: [
+                  context.requiredValidator(),
+                  context.minCharValidator(8),
+                  context.matchValidator(value.text),
+                ],
+              ),
             ),
-            AvaTextField(
-              controller: _passwordMatchController,
-              label: context.l10n.passwordRepeat,
-              validators: [
-                context.requiredValidator(),
-                context.minCharValidator(8),
-                context.matchValidator(_passwordController.text),
-              ],
+            ValueListenableBuilder(
+              valueListenable: _passwordController,
+              builder: (context, value, _) => AvaTextField(
+                controller: _passwordMatchController,
+                label: context.l10n.passwordRepeat,
+                validators: [
+                  context.requiredValidator(),
+                  context.minCharValidator(8),
+                  context.matchValidator(value.text),
+                ],
+              ),
             ),
             const SizedBox(height: 48),
             widget.loading

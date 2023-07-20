@@ -1,9 +1,14 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:dfunc/dfunc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/account/extensions.dart';
+import '../../../../core/account/models/account_data.dart';
 import '../../../../di.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../ui/colors.dart';
+import '../../../../ui/drawer.dart';
 import '../../data/address_repository.dart';
 import '../../models/address.dart';
 import '../extensions.dart';
@@ -23,13 +28,20 @@ class _State extends State<AddressListScreen> {
   @override
   void initState() {
     super.initState();
-    _stream = sl<AddressRepository>().watchAll();
+    final userId = context.read<AccountData>().userId;
+    _stream = sl<AddressRepository>().watchAll(userId);
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: Text(context.l10n.myAddresses),
+        ),
+        drawer: AvaDrawer(
+          userName: context.read<AccountData>().userName.split(' ').first,
+          userEmail: context.read<AccountData>().email,
+          onChangePassword: ignore,
+          onLogout: () => context.logout(),
         ),
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add, color: AvaColors.ghostWhite),

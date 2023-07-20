@@ -6,4 +6,7 @@ import 'services/account_bloc.dart';
 extension AccountModuleExt on BuildContext {
   void refreshAccount(String userId) =>
       read<AccountBloc>()..add(AccountEvent.register(userId));
+
+
+  void logout() => read<AccountBloc>()..add(const AccountEvent.logout());
 }

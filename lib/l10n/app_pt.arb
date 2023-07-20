@@ -19,6 +19,16 @@
   "signUpMessage": "Não tem uma conta?",
   "signUpCTA": "Registre-se!",
   "save": "Salvar",
+  "changePassword": "Alterar senha",
+  "logout": "Sair",
+  "helloUser": "Olá, {name}",
+  "@helloUser": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "deleteAddress": "Apagar endereço",
   "editAddress": "Editar endereço",
   "validatorRequired": "Campo obrigatório",

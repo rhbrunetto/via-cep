@@ -11,6 +11,7 @@ part 'account_bloc.freezed.dart';
 @freezed
 sealed class AccountEvent with _$AccountEvent {
   const factory AccountEvent.load() = _LoadEvent;
+  const factory AccountEvent.logout() = _LogoutEvent;
   const factory AccountEvent.register(String userId) = _RegisterEvent;
 }
 
@@ -35,8 +36,14 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   EventHandler<AccountEvent, AccountState> get _eventHandler =>
       (event, emit) => event.map(
             load: (_) => _loadAccount(emit),
+            logout: (_) => _logout(emit),
             register: (event) => _registerAccount(event, emit),
           );
+
+  Future<void> _logout(Emitter emit) async {
+    await _repository.clear();
+    emit(const AccountState.none());
+  }
 
   Future<void> _registerAccount(_RegisterEvent event, Emitter emit) async {
     final registered = await _repository.setAccount(event.userId);
@@ -45,7 +52,6 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   }
 
   Future<void> _loadAccount(Emitter emit) async {
-    await Future.delayed(const Duration(seconds: 2));
     final account = await _repository.load();
 
     final newState = account

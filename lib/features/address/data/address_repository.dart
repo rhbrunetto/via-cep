@@ -12,8 +12,9 @@ class AddressRepository {
 
   final AvaDatabase _db;
 
-  Stream<List<Address>> watchAll() {
+  Stream<List<Address>> watchAll(String userId) {
     final query = _db.select(_db.addressRows)
+      ..where((tbl) => tbl.userId.equals(userId))
       ..orderBy([(t) => OrderingTerm.desc(t.created)]);
 
     return query
