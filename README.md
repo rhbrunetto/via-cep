@@ -1,16 +1,14 @@
 # ava
 
-A new Flutter project.
+## Build
 
-## Getting Started
+Some features rely on code generation, that is not versioned.
 
-This project is a starting point for a Flutter application.
+You can generate these files (build the app) by running `make flutter_build`
 
-A few resources to get you started if this is your first Flutter project:
+## Test migrations
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. Generate schemas running `make flutter_generate_test_schema`
+2. Run migration test `make flutter_test`
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+To dump a new schema run `export <VERSION>; make dump_schema` where <VERSION> is the latest database version.
