@@ -7,6 +7,5 @@ extension AccountModuleExt on BuildContext {
   void refreshAccount(String userId) =>
       read<AccountBloc>()..add(AccountEvent.register(userId));
 
-
   void logout() => read<AccountBloc>()..add(const AccountEvent.logout());
 }

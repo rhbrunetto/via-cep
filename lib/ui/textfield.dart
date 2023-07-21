@@ -12,6 +12,7 @@ class AvaTextField extends StatefulWidget {
     this.inputType = TextInputType.text,
     this.autoFocus = false,
     this.isPassword = false,
+    this.enabled = true,
     this.hint,
     this.inputFormatters,
     this.focusNode,
@@ -29,6 +30,7 @@ class AvaTextField extends StatefulWidget {
   final VoidCallback? onFocusMissed;
   final bool autoFocus;
   final bool isPassword;
+  final bool enabled;
 
   @override
   State<AvaTextField> createState() => _AvaTextFieldState();
@@ -53,6 +55,7 @@ class _AvaTextFieldState extends State<AvaTextField> {
           controller: widget.controller,
           autofocus: widget.autoFocus,
           obscureText: _obscure,
+          enabled: widget.enabled,
           textInputAction: TextInputAction.next,
           validator: (v) =>
               widget.validators?.map((it) => it(v)).whereNotNull().firstOrNull,

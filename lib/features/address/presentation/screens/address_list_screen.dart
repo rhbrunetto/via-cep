@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:dfunc/dfunc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,6 +6,7 @@ import '../../../../core/account/extensions.dart';
 import '../../../../core/account/models/account_data.dart';
 import '../../../../di.dart';
 import '../../../../l10n/l10n.dart';
+import '../../../../routes.gr.dart';
 import '../../../../ui/colors.dart';
 import '../../../../ui/drawer.dart';
 import '../../data/address_repository.dart';
@@ -40,7 +40,7 @@ class _State extends State<AddressListScreen> {
         drawer: AvaDrawer(
           userName: context.read<AccountData>().userName.split(' ').first,
           userEmail: context.read<AccountData>().email,
-          onChangePassword: ignore,
+          onChangePassword: () => context.router.push(const EditProfileRoute()),
           onLogout: () => context.logout(),
         ),
         floatingActionButton: FloatingActionButton(

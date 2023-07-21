@@ -18,7 +18,12 @@ class AppRouter extends $AppRouter {
       children: [
         AutoRoute(page: AddressListRoute.page, initial: true),
         AutoRoute(page: AddressFormRoute.page),
-        AutoRoute(page: EditProfileRoute.page),
+        AutoRoute(
+          page: ProfileFlowRoute.page,
+          children: [
+            AutoRoute(page: EditProfileRoute.page, initial: true),
+          ],
+        ),
       ],
     ),
     AutoRoute(

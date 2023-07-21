@@ -23,7 +23,7 @@ class SignInScreen extends StatelessWidget {
           builder: (context, state) => SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Column(
+              child: ListView(
                 children: [
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 64.0),
@@ -37,7 +37,6 @@ class SignInScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 24.0),
                   const _Register(),
-                  const Spacer(),
                 ],
               ),
             ),
@@ -50,24 +49,26 @@ class _Register extends StatelessWidget {
   const _Register();
 
   @override
-  Widget build(BuildContext context) => Text.rich(
-        TextSpan(
-          text: context.l10n.signUpMessage,
-          children: [
-            WidgetSpan(
-              child: InkWell(
-                onTap: () => context.router.push(const SignUpFlowRoute()),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text(
-                    context.l10n.signUpCTA,
-                    style:
-                        const TextStyle(decoration: TextDecoration.underline),
+  Widget build(BuildContext context) => Center(
+        child: Text.rich(
+          TextSpan(
+            text: context.l10n.signUpMessage,
+            children: [
+              WidgetSpan(
+                child: InkWell(
+                  onTap: () => context.router.push(const SignUpFlowRoute()),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      context.l10n.signUpCTA,
+                      style:
+                          const TextStyle(decoration: TextDecoration.underline),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
 }

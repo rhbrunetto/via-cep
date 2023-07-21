@@ -14,8 +14,12 @@ class UserForm extends StatefulWidget {
     super.key,
     required this.loading,
     required this.onSubmit,
+    this.userName,
+    this.userEmail,
   });
 
+  final String? userName;
+  final String? userEmail;
   final bool loading;
   final UserCallback onSubmit;
 
@@ -29,6 +33,26 @@ class _UserFormState extends State<UserForm> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _passwordMatchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _updateFields();
+  }
+
+  @override
+  void didUpdateWidget(covariant UserForm oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.userEmail != widget.userEmail ||
+        oldWidget.userName != widget.userName) {
+      _updateFields();
+    }
+  }
+
+  void _updateFields() {
+    _nameController.text = widget.userName ?? '';
+    _emailController.text = widget.userEmail ?? '';
+  }
 
   void _onSubmit() {
     final valid = _formKey.currentState?.validate() ?? false;
@@ -53,6 +77,7 @@ class _UserFormState extends State<UserForm> {
               controller: _nameController,
               label: context.l10n.name,
               hint: context.l10n.nameHint,
+              enabled: widget.userName == null,
               validators: [
                 context.requiredValidator(),
                 context.countValidator(2),
@@ -62,6 +87,7 @@ class _UserFormState extends State<UserForm> {
               controller: _emailController,
               label: context.l10n.email,
               hint: context.l10n.emailHint,
+              enabled: widget.userEmail == null,
               validators: [
                 context.requiredValidator(),
                 context.emailValidator(),
@@ -72,6 +98,7 @@ class _UserFormState extends State<UserForm> {
               builder: (context, value, _) => AvaTextField(
                 controller: _passwordController,
                 label: context.l10n.password,
+                isPassword: true,
                 validators: [
                   context.requiredValidator(),
                   context.minCharValidator(8),
@@ -84,6 +111,7 @@ class _UserFormState extends State<UserForm> {
               builder: (context, value, _) => AvaTextField(
                 controller: _passwordMatchController,
                 label: context.l10n.passwordRepeat,
+                isPassword: true,
                 validators: [
                   context.requiredValidator(),
                   context.minCharValidator(8),

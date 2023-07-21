@@ -50,7 +50,7 @@ class _AvaAppState extends State<AvaApp> {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       theme: const AvaThemeData.dark().toMaterialTheme(),
-      title: 'AVA Via Cep',
+      title: 'AVA Via CEP',
     );
   }
 }

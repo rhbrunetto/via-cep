@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../db/db.dart';
@@ -29,11 +30,9 @@ class UserRepository {
     await _db.into(_db.userRows).insert(updated.toDto());
   }
 
-  Future<void> edit(User user) async {
-    final updated = user.copyWith(
-      password: _hasher.hash(user.password),
-    );
+  Future<void> updatePassword(String id, String password) async {
+    final query = _db.update(_db.userRows)..where((tbl) => tbl.id.equals(id));
 
-    await _db.into(_db.userRows).insertOnConflictUpdate(updated.toDto());
+    await query.write(UserRowsCompanion(password: Value(password)));
   }
 }

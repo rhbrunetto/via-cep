@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/users/extensions.dart';
 import '../../../../l10n/l10n.dart';
+import '../../../../ui/user_form.dart';
 import '../../services/sign_up_bloc.dart';
-import '../widgets/user_form.dart';
 import '../../../../ui/snackbar.dart';
 
 @RoutePage()
@@ -25,8 +25,7 @@ class SignUpScreen extends StatelessWidget {
           builder: (context, state) => SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: ListView(
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 32.0),
