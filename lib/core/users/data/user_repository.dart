@@ -32,7 +32,8 @@ class UserRepository {
 
   Future<void> updatePassword(String id, String password) async {
     final query = _db.update(_db.userRows)..where((tbl) => tbl.id.equals(id));
+    final hashed = _hasher.hash(password);
 
-    await query.write(UserRowsCompanion(password: Value(password)));
+    await query.write(UserRowsCompanion(password: Value(hashed)));
   }
 }

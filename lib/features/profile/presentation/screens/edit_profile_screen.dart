@@ -20,6 +20,7 @@ class EditProfileScreen extends StatelessWidget {
         ),
         body: BlocConsumer<EditProfileBloc, EditProfileState>(
           listener: (context, state) => state.whenOrNull(
+            success: () => context.router.pop(),
             failed: () =>
                 showErrorSnackBar(context, context.l10n.editProfileFailed),
           ),

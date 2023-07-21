@@ -11,15 +11,15 @@
 import 'package:auto_route/auto_route.dart' as _i11;
 import 'package:ava/features/address/models/address.dart' as _i12;
 import 'package:ava/features/address/presentation/address_flow_route.dart'
-    as _i6;
-import 'package:ava/features/address/presentation/screens/address_form_screen.dart'
-    as _i4;
-import 'package:ava/features/address/presentation/screens/address_list_screen.dart'
-    as _i5;
-import 'package:ava/features/profile/presentation/profile_flow_screen.dart'
     as _i8;
-import 'package:ava/features/profile/presentation/screens/edit_profile_screen.dart'
+import 'package:ava/features/address/presentation/screens/address_form_screen.dart'
+    as _i6;
+import 'package:ava/features/address/presentation/screens/address_list_screen.dart'
     as _i7;
+import 'package:ava/features/profile/presentation/profile_flow_screen.dart'
+    as _i5;
+import 'package:ava/features/profile/presentation/screens/edit_profile_screen.dart'
+    as _i4;
 import 'package:ava/features/sign_in/presentation/screens/sign_in_screen.dart'
     as _i3;
 import 'package:ava/features/sign_in/presentation/sign_in_flow_screen.dart'
@@ -54,12 +54,24 @@ abstract class $AppRouter extends _i11.RootStackRouter {
         child: const _i3.SignInScreen(),
       );
     },
+    EditProfileRoute.name: (routeData) {
+      return _i11.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i4.EditProfileScreen(),
+      );
+    },
+    ProfileFlowRoute.name: (routeData) {
+      return _i11.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i5.ProfileFlowScreen(),
+      );
+    },
     AddressFormRoute.name: (routeData) {
       final args = routeData.argsAs<AddressFormRouteArgs>(
           orElse: () => const AddressFormRouteArgs());
       return _i11.AutoRoutePage<_i12.AddressData>(
         routeData: routeData,
-        child: _i4.AddressFormScreen(
+        child: _i6.AddressFormScreen(
           key: args.key,
           data: args.data,
         ),
@@ -68,25 +80,13 @@ abstract class $AppRouter extends _i11.RootStackRouter {
     AddressListRoute.name: (routeData) {
       return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i5.AddressListScreen(),
+        child: const _i7.AddressListScreen(),
       );
     },
     AddressFlowRoute.name: (routeData) {
       return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i6.AddressFlowScreen(),
-      );
-    },
-    EditProfileRoute.name: (routeData) {
-      return _i11.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i7.EditProfileScreen(),
-      );
-    },
-    ProfileFlowRoute.name: (routeData) {
-      return _i11.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i8.ProfileFlowScreen(),
+        child: const _i8.AddressFlowScreen(),
       );
     },
     SignUpFlowRoute.name: (routeData) {
@@ -147,7 +147,35 @@ class SignInRoute extends _i11.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.AddressFormScreen]
+/// [_i4.EditProfileScreen]
+class EditProfileRoute extends _i11.PageRouteInfo<void> {
+  const EditProfileRoute({List<_i11.PageRouteInfo>? children})
+      : super(
+          EditProfileRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'EditProfileRoute';
+
+  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i5.ProfileFlowScreen]
+class ProfileFlowRoute extends _i11.PageRouteInfo<void> {
+  const ProfileFlowRoute({List<_i11.PageRouteInfo>? children})
+      : super(
+          ProfileFlowRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileFlowRoute';
+
+  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i6.AddressFormScreen]
 class AddressFormRoute extends _i11.PageRouteInfo<AddressFormRouteArgs> {
   AddressFormRoute({
     _i13.Key? key,
@@ -185,7 +213,7 @@ class AddressFormRouteArgs {
 }
 
 /// generated route for
-/// [_i5.AddressListScreen]
+/// [_i7.AddressListScreen]
 class AddressListRoute extends _i11.PageRouteInfo<void> {
   const AddressListRoute({List<_i11.PageRouteInfo>? children})
       : super(
@@ -199,7 +227,7 @@ class AddressListRoute extends _i11.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i6.AddressFlowScreen]
+/// [_i8.AddressFlowScreen]
 class AddressFlowRoute extends _i11.PageRouteInfo<void> {
   const AddressFlowRoute({List<_i11.PageRouteInfo>? children})
       : super(
@@ -208,34 +236,6 @@ class AddressFlowRoute extends _i11.PageRouteInfo<void> {
         );
 
   static const String name = 'AddressFlowRoute';
-
-  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i7.EditProfileScreen]
-class EditProfileRoute extends _i11.PageRouteInfo<void> {
-  const EditProfileRoute({List<_i11.PageRouteInfo>? children})
-      : super(
-          EditProfileRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'EditProfileRoute';
-
-  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i8.ProfileFlowScreen]
-class ProfileFlowRoute extends _i11.PageRouteInfo<void> {
-  const ProfileFlowRoute({List<_i11.PageRouteInfo>? children})
-      : super(
-          ProfileFlowRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'ProfileFlowRoute';
 
   static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
 }

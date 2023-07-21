@@ -39,9 +39,10 @@ class AvaThemeData {
   ButtonStyle get _buttonStyle => ButtonStyle(
         animationDuration: const Duration(milliseconds: 200),
         overlayColor: MaterialStateProperty.all(Colors.transparent),
-        backgroundColor: MaterialStateProperty.all(AvaColors.eerieBlack),
-        foregroundColor: MaterialStateProperty.all(AvaColors.platinum),
+        backgroundColor: MaterialStateProperty.all(AvaColors.outerSpace),
+        foregroundColor: MaterialStateProperty.all(AvaColors.ghostWhite),
         iconColor: MaterialStateProperty.all(AvaColors.platinum),
+        surfaceTintColor: MaterialStateProperty.all(AvaColors.platinum),
         padding: MaterialStateProperty.all(
           const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
         ),
@@ -89,7 +90,7 @@ class AvaThemeData {
         ),
         colorScheme: ColorScheme.light(
           brightness: brightness,
-          primary: AvaColors.eerieBlack,
+          primary: AvaColors.outerSpace,
           secondary: AvaColors.outerSpace,
           background: backgroundColor,
         ),
